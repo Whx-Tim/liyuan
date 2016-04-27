@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sell extends Model
+class Lost extends Model
 {
+
     /**
-     * 一个sell对应一个user
+     * 一个lost对应一个user
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

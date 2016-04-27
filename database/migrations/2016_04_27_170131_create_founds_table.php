@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCourseCommentsTable extends Migration
+class CreateFoundsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,16 @@ class CreateCourseCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_comments', function (Blueprint $table) {
+        Schema::create('founds', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_number')->unique();
             $table->string('name');
-            $table->string('teacher');
-            $table->string('time');
-            $table->string('phone')->nullable();
-            $table->integer('course_id');
+            $table->string('type');
+            $table->string('address');
+            $table->text('info');
+            $table->text('img');
+            $table->string('location');
+            $table->string('phone');
             $table->integer('user_id');
-            $table->boolean('accepted')->default(false);
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateCourseCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('course_comments');
+        Schema::drop('founds');
     }
 }

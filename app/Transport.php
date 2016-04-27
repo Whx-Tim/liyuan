@@ -3,12 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
 
-class Course extends Model
+class Transport extends Model
 {
     /**
-     * 一个course只有一个user
+     * 一个transport对应一个user
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -17,11 +16,11 @@ class Course extends Model
     }
 
     /**
-     * 一个course对应多个courseComment
+     * 一个transport对应多个transportUser
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comments(){
-        return $this->hasMany(CourseComment::class);
+    public function transportUsers(){
+        return $this->hasMany(TransportUser::class);
     }
 }

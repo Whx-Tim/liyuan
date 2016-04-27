@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSellsTable extends Migration
+class CreateLostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,15 @@ class CreateSellsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sells', function (Blueprint $table) {
+        Schema::create('losts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('name');
-            $table->text('img')->nullable();
-            $table->integer('price');
+            $table->string('info');
             $table->text('content')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email');
-            $table->unsignedInteger('user_id');
+            $table->string('type');
+            $table->string('address');
+            $table->string('phone');
+            $table->integer('user_id');
             $table->boolean('condition')->default(false);
-            $table->integer('count')->default(0);
             $table->timestamps();
         });
     }
@@ -35,6 +32,6 @@ class CreateSellsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sells');
+        Schema::drop('losts');
     }
 }

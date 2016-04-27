@@ -4,14 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sell extends Model
+class Replie extends Model
 {
+
     /**
-     * 一个sell对应一个user
+     * 一个replie对应一个post
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function post(){
+        return $this->belongsTo(Post::class);
     }
 }

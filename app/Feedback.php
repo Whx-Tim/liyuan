@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sell extends Model
+class Feedback extends Model
 {
     /**
-     * 一个sell对应一个user
+     * 一个feedback对应一个user
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

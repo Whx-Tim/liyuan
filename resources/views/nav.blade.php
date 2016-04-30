@@ -23,10 +23,10 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人主页 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#BindingEmail">绑定邮箱</a></li>
-                        <li><a href="#BindingPhone">绑定手机</a></li>
-                        <li><a href="#ModifyPassword">修改密码</a></li>
-                        <li><a href="#ModifyInfo">修改个人信息</a></li>
+                        <li><a href="{{ url('bindingEmail') }}">绑定邮箱</a></li>
+                        <li><a href="{{ url('bindingPhone') }}">绑定手机</a></li>
+                        <li><a href="{{ url('modifyPassword') }}">修改密码</a></li>
+                        <li><a href="{{ url('modifyInfo') }}">修改个人信息</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -65,6 +65,7 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/owner/'.Auth::user()->id) }}"><i class="fa fa-archive"></i>个人主页</a></li>
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>登出</a></li>
                         </ul>
                     </li>

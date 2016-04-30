@@ -27,6 +27,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+    Route::get('owner/{user}','HomeController@showOwner');
+    Route::get('modifyInfo','HomeController@showEditOwner');
+    Route::get('bindingEmail','HomeController@showEmail');
+    Route::post('bindingEmail/{user}','HomeController@bindingEmail');
+    Route::get('bindingPhone','HomeController@showPhone');
+    Route::get('modifyPassword','HomeController@showPassword');
+    
 });
 
 Route::group(['middleware' => ['web']], function () {

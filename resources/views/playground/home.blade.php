@@ -32,18 +32,24 @@
                                     <th></th>
                                     </thead>
                                     <tbody>
+                                    @foreach($posts as $post)
                                     <tr>
-                                        <td>我是时间</td>
-                                        <td><a href="{{ url('playgroundDetail') }}">我是标题</a></td>
-                                        <td>我是楼主</td>
-                                        <td class="actions-hover actions-fade"><a href="#delete"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
+                                        <td>{{ $post->created_at }}</td>
+                                        <td><a href="{{ url('playground/detail/'.$post->id) }}">{{ $post->title }}</a></td>
+                                        <td>{{ $post->user->username }}</td>
+                                        <td class="actions-hover actions-fade"><a href="{{ url('playground/delete/'.$post->id) }}"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
                                     </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
-                                <div class="home-pagination">
-
+                                <div class="col-md-12" style="text-align: center">
+                                    {!! $posts->render() !!}
                                 </div>
-                                @include('playground.publish_modal')
+                                @if(Auth::check())
+                                    @include('playground.publish_modal')
+                                @else
+                                    <button type="button" class="btn btn-primary btn-radius btn-block" data-toggle="popover" data-trigger="focus" data-content="登录后才能发布" data-placement="top">发布新帖</button>
+                                @endif
                             </div>
                         </div>
                     </div>

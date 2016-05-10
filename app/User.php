@@ -52,7 +52,7 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function part_times(){
-        return $this->hasMany(Parttime::class);
+        return $this->hasMany(PartTime::class);
     }
 
     /**

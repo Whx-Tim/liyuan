@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParttimesTable extends Migration
+class CreatePartTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateParttimesTable extends Migration
      */
     public function up()
     {
-        Schema::create('parttimes', function (Blueprint $table) {
+        Schema::create('part_times', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('address');
@@ -23,7 +23,7 @@ class CreateParttimesTable extends Migration
             $table->text('content')->nullable();
             $table->string('email');
             $table->integer('user_id');
-            $table->boolean('condition')->default(false);
+            $table->boolean('condition')->default(true);
             $table->integer('count')->default(0);
             $table->timestamps();
         });
@@ -36,6 +36,6 @@ class CreateParttimesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('parttimes');
+        Schema::drop('part_times');
     }
 }

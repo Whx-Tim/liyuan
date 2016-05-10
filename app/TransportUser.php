@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransportUser extends Model
 {
+    protected $guarded = [];
+
     /**
      * 一个transportUser对应一个user
      *

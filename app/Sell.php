@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sell extends Model
 {
+    protected $guarded = ['_token'];
+
     /**
      * 一个sell对应一个user
      * 

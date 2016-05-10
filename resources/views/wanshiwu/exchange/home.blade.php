@@ -34,15 +34,18 @@
                             @foreach($courses as $course)
                             <tr>
                                 <td>{{ $course->created_at }}</td>
-                                <td><a href="{{ url('exchangeDetail/'.$course->id) }}">{{ $course->name }} 换 {{ $course->want_name }}</a></td>
+                                <td><a href="{{ url('exchange/detail/'.$course->id) }}">{{ $course->name }} 换 {{ $course->want_name }}</a></td>
                                 <td>{{ $course->user->username }}</td>
-                                <td class="actions-hover actions-fade"><a href="#delete"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
+                                <td class="actions-hover actions-fade"><a data-id="{{ $course->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
                             </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        @include('pagination')
-                        @include('wanshiwu.exchange.publish_modal')
+                        @if(Auth::check())
+                            @include('wanshiwu.exchange.publish_modal')
+                        @else
+                            <button type="button" class="btn btn-primary btn-lg btn-radius btn-block" data-toggle="popover" data-trigger="focus" data-content="请先登录后才能发布" data-placement="top">发布课程交换信息</button>
+                        @endif
                     </div>
                     
                 </div>
@@ -50,3 +53,5 @@
         </div>
     </div>
 @endsection
+
+@include('delete',['url' => 'exchange'])

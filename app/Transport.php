@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transport extends Model
 {
+    protected $guarded = ['_token','_method'];
+    
     /**
      * 一个transport对应一个user
      * 
@@ -20,7 +22,7 @@ class Transport extends Model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function transportUsers(){
-        return $this->hasMany(TransportUser::class);
+    public function transport_user(){
+        return $this->hasOne(TransportUser::class);
     }
 }

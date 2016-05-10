@@ -2073,10 +2073,16 @@ a.label:focus,a.label:hover{
 }
 
 .home-pagination {
+    display: block;
     text-align: center;
+    width: 100%;
 }
 
 .list-group>.list-group-item>span {
     display: inline-block;
-    width: 15%;
+    width: 20%;
+}
+
+label > strong {
+    color: red;
 }

@@ -23,7 +23,7 @@
                             </div>
                         </form>
                         <hr>
-                        <table class="table table-hover">
+                        <table class="table table-hover" style="text-align: left">
                             <thead>
                             <th>发布时间</th>
                             <th>标题</th>
@@ -34,10 +34,10 @@
                             @foreach($sells as $sell)
                                 <tr>
                                     <td>{{ $sell->created_at }}</td>
-                                    <td><a href="{{ url('sellDetail/'.$sell->id) }}">{{ $sell->name }}</a></td>
+                                    <td><a href="{{ url('sell/detail/'.$sell->id) }}">{{ $sell->name }}</a></td>
                                     <td>{{ $sell->username }}</td>
                                     <td class="actions-hover actions-fade">
-                                        <a href="#" class="delete-row"><i class="fa fa-trash-o"></i></a>
+                                        <a data-id="{{ $sell->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -53,3 +53,5 @@
         </div>
     </div>
 @endsection
+
+@include('delete',['url' => 'sell'])

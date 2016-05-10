@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    protected $guarded = ['_token'];
+
     /**
      * 一个course只有一个user
      * 

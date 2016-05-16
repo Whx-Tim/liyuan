@@ -233,7 +233,10 @@ class HomeController extends Controller
             $img = $this->moveFile($request);
             $request = $request->except('_token');
             $request['img'] = $img;
+        } else {
+            $request = $request->except('_token');
         }
+
 
         return Sell::create($request) ? redirect('sell') : redirect()->back();
     }

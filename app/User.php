@@ -117,6 +117,10 @@ class User extends Authenticatable
     public function TransportUsers(){
         return $this->hasMany(TransportUser::class);
     }
+
+    public function isAdmin(){
+        return $this->role == 'admin';
+    }
 //
 //    /**
 //     * @param $attribute

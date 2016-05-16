@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\User;
 use Illuminate\Console\Command;
 
 class MakeAdminCommand extends Command
@@ -38,7 +39,13 @@ class MakeAdminCommand extends Command
     public function handle()
     {
         //
-        $user = $this->argument('user');
+        $user = User::create([
+            'username' => $this->argument('user'),
+            'password' => bcrypt($this->option('password')),
+            'email'    => 'test@test.com',
+            'phone'    => '11111111111',
+            'role'     => 'admin'
+        ]);
         if($user)
             $this->info('successful！');
     }

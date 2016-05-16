@@ -229,10 +229,11 @@ class HomeController extends Controller
             'price' => 'required',
             'email' => 'required',
         ]);
-
-        $img = $this->moveFile($request);
-        $request = $request->except('_token');
-        $request['img'] = $img;
+        if ($request->file('img')){
+            $img = $this->moveFile($request);
+            $request = $request->except('_token');
+            $request['img'] = $img;
+        }
 
         return Sell::create($request) ? redirect('sell') : redirect()->back();
     }

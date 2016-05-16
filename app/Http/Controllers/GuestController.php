@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Found;
 use App\Lost;
-use App\Parttime;
+use App\PartTime;
 use App\Post;
 use App\Sell;
 use App\Transport;

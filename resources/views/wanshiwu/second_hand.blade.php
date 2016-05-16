@@ -46,7 +46,11 @@
                         <div class="home-pagination">
                             {!! $sells->render() !!}
                         </div>
-                        @include('wanshiwu.sell_publish_modal')
+                        @if(Auth::check())
+                            @include('wanshiwu.sell_publish_modal')
+                        @else
+                            <button type="button" class="btn btn-primary btn-block btn-radius" data-toggle="popover" data-trigger="focus" data-content="登录后才能发布" data-placement="top">发布交易信息</button>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@
                                     </div>
                                 </td></tr>
                                 <tr><td class="actions-hover actions-fade">
-                                    @if(Auth::check() && Auth::user()->id == $course->user->id)
+                                    @if(Auth::check() && (Auth::user()->id == $course->user->id || auth()->user()->isAdmin()))
                                         <a href="{{ url('exchange/edit/'.$course->id) }}"><i class="fa fa-pencil"></i>发帖人和管理员可见</a>
                                         <a data-id="{{ $course->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>发帖人和管理员可见</a>
                                     @endif

@@ -21,9 +21,9 @@
                 <tr><td><div class="col-md-2">联系电话:</div><div class="col-md-8">{{ $lost->phone }}</div></td></tr>
                 <tr><td><div class="col-md-2">发布用户:</div><div class="col-md-8">{{ $lost->user->username }}</div></td></tr>
                 <tr><td><div class="col-md-2">发布时间:</div><div class="col-md-8">{{ $lost->created_at }}</div></td></tr>
-                <tr><td class="actions-hover actions-fade">
-                        <a href="{{ url('lost/delete/'.$lost->id) }}"><i class="fa fa-trash-o"></i>仅管理员可见</a>
-                        <a href="{{ url('lost/edit/'.$lost->id) }}"><i class="fa fa-pencil"></i>仅管理员可见</a></td></tr>
+                @if(Auth::check() && (Auth::user()->id == $lost->user->id || auth()->user()->isAdmin()))
+                    <tr><td class="actions-hover actions-fade"><a data-id="{{ $lost->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>删除</a></td></tr>
+                @endif
                 </tbody>
             </table>
             <hr>
@@ -31,3 +31,5 @@
         </div>
     </div>
 @endsection
+
+@include('deleteDetail',['url' => 'lost'])

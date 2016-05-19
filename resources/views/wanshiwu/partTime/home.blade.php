@@ -31,9 +31,11 @@
                                 <td>{{ $partTime->created_at }}</td>
                                 <td><a href="{{ url('partTime/detail/'.$partTime->id) }}">{{ $partTime->title }}</a></td>
                                 <td>{{ $partTime->user->username }}</td>
-                                <td class="actions-hover actions-fade">
-                                    <a data-id="{{ $partTime->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>发帖人&管理员可见</a>
-                                </td>
+                                @if(Auth::check() && auth()->user()->isAdmin())
+                                    <td class="actions-hover actions-fade">
+                                        <a data-id="{{ $partTime->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>发帖人&管理员可见</a>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                             </tbody>

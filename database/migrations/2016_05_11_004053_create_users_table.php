@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('bornDate')->nullable();
             $table->text('content')->nullable();
             $table->integer('stuNumber')->nullable();
-            $table->string('role')->default('user');
+            $table->string('role');
             $table->rememberToken();
             $table->timestamps();
         });

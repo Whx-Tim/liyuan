@@ -4,7 +4,7 @@ html, body {
 	color:#000;
 	font-size:14px;
 	font-weight:300;
-	background:#5bc0de;
+
 }
 a, a:hover, a:active, a:visited, a:link {
     outline:none;
@@ -2085,4 +2085,7 @@ a.label:focus,a.label:hover{
 
 label > strong {
     color: red;
+}
+.fa-chevron-right {
+    float: right;
 }

@@ -23,6 +23,15 @@
                 <tr><td><div class="col-md-2">放置地点:</div><div class="col-md-8">{{ $found->location }}</div></td></tr>
                 <tr><td><div class="col-md-2">联系电话:</div><div class="col-md-8">{{ $found->phone }}</div></td></tr>
                 <tr><td><div class="col-md-2">发布用户:</div><div class="col-md-8">{{ $found->user->username }}</div></td></tr>
+                @if(Auth::check() && (Auth::user()->id == $found->user->id || auth()->user()->isAdmin()))
+                    <tr>
+                        <td class="actions-hover actions-fade">
+                            <div class="col-md-8 col-md-offset-2">
+                                <a data-id="{{ $found->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>删除</a>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
             <hr>
@@ -30,3 +39,5 @@
         </div>
     </div>
 @endsection
+
+@include('deleteDetail',['url' => 'found'])

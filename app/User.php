@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password','phone','sex','bornDate','content','stuNumber'
+        'username', 'email', 'password','phone','sex','bornDate','content','stuNumber','role'
     ];
 
     protected $guarded = [
@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function hasRole($role)
+    {
+        return $this->role == $role;
+    }
     /**
      * 一个用户对应多个sell
      * 
@@ -116,6 +120,10 @@ class User extends Authenticatable
      */
     public function TransportUsers(){
         return $this->hasMany(TransportUser::class);
+    }
+
+    public function Replies(){
+        return $this->hasMany(Replie::class);
     }
 
     public function isAdmin(){

@@ -40,7 +40,9 @@
                                                 <li class="list-group-item"><span>状态:</span>
                                                     <button class="btn btn-danger btn-radius" data-toggle="popover" data-trigger="focus" data-content="该订单已被其他用户领取了"><i class="fa fa-exclamation"></i>已接受</button>
                                                 </li>
-                                                <li class="list-group-item"><span>操作:</span><a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))" class="btn btn-radius btn-danger">删除</a></li>
+                                                @if(Auth::check() && auth()->user()->isAdmin())
+                                                    <li class="list-group-item"><span>操作:</span><a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))" class="btn btn-radius btn-danger">删除</a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
@@ -59,7 +61,9 @@
                                             <li class="list-group-item"><span>状态:</span>
                                                 <button class="btn btn-danger btn-radius" data-toggle="popover" data-trigger="focus" data-content="该订单已被其他用户领取了"><i class="fa fa-exclamation"></i>已接受</button>
                                             </li>
-                                            <li class="list-group-item"><span>操作:</span><a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))" class="btn btn-radius btn-danger">删除</a></li>
+                                            @if(Auth::check() && auth()->user()->isAdmin())
+                                                <li class="list-group-item"><span>操作:</span><a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))" class="btn btn-radius btn-danger">删除</a></li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -80,7 +84,9 @@
                                                 <button type="button" role="button" class="btn btn-success btn-radius" data-toggle="modal" data-target=".accept{!! $transport->id !!}-modal"><i class="fa fa-check"></i>未接受</button>
                                                 @include('wanshiwu.transport.accept_modal',['id' => $transport->id])
                                             </li>
-                                            <li class="list-group-item"><span>操作:</span><a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))" class="btn btn-radius btn-danger">删除</a></li>
+                                            @if(Auth::check() && Auth::user()->isAdmin())
+                                                <li class="list-group-item"><span>操作:</span><a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))" class="btn btn-radius btn-danger">删除</a></li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>

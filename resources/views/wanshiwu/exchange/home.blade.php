@@ -36,7 +36,9 @@
                                 <td>{{ $course->created_at }}</td>
                                 <td><a href="{{ url('exchange/detail/'.$course->id) }}">{{ $course->name }} 换 {{ $course->want_name }}</a></td>
                                 <td>{{ $course->user->username }}</td>
-                                <td class="actions-hover actions-fade"><a data-id="{{ $course->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
+                                @if(Auth::check() && auth()->user()->isAdmin())
+                                    <td class="actions-hover actions-fade"><a data-id="{{ $course->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
+                                @endif
                             </tr>
                             @endforeach
                             </tbody>

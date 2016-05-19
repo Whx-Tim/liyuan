@@ -37,7 +37,9 @@
                                         <td>{{ $post->created_at }}</td>
                                         <td><a href="{{ url('playground/detail/'.$post->id) }}">{{ $post->title }}</a></td>
                                         <td>{{ $post->user->username }}</td>
-                                        <td class="actions-hover actions-fade"><a href="{{ url('playground/delete/'.$post->id) }}"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
+                                        @if(Auth::check() && auth()->user()->isAdmin())
+                                            <td class="actions-hover actions-fade"><a href="{{ url('playground/delete/'.$post->id) }}"><i class="fa fa-trash-o"></i>仅管理员可见</a></td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                     </tbody>

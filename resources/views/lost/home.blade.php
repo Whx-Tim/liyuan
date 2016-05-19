@@ -33,9 +33,11 @@
                             <td>{{ $lost->created_at }}</td>
                             <td><a href="{{ url('lost/detail/'.$lost->id) }}">{{ $lost->info }}</a></td>
                             <td>{{ $lost->user->username }}</td>
-                            <td class="actions-hover actions-fade">
-                                <a href="{{ url('lost/delete'.$lost->id) }}"><i class="fa fa-trash-o"></i>仅管理员可见</a>
-                            </td>
+                            @if(Auth::check() && auth()->user()->isAdmin())
+                                <td class="actions-hover actions-fade">
+                                    <a data-id="{{ $lost->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i>仅管理员可见</a>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach    
                     </tbody>
@@ -46,3 +48,5 @@
         </div>
     </div>
 @endsection
+
+@include('delete',['url' => 'lost'])

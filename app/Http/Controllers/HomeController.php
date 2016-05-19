@@ -15,6 +15,7 @@ use App\User;
 use App\Transport;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -103,6 +104,32 @@ class HomeController extends Controller
     }
 
     /**
+     * 修改密码
+     * 
+     * @param Request $request
+     * @param User $user
+     * @return mixed
+     */
+    public function updatePassword(Request $request,User $user)
+    {
+        $this->validate($request,[
+            'password' => 'required|confirmed'
+        ]);
+        if (Hash::check($request->input('old_password'),$user->password)){
+            $user->update(['password' => bcrypt($request->input('password'))]);
+            return redirect('owner/'.$user->id)->with(['status' => 'success','message' => '修改成功']);
+        } else {
+            return redirect()->back()->with(['status' => 'error','message' => '修改失败']);
+        }
+    }
+    
+    public function updateOwnerInfo(Request $request,User $user)
+    {
+        $this->validate($request,[
+
+        ]);
+    }
+    /**
      * 显示意见反馈页面
      * 
      * @return mixed
@@ -136,8 +163,27 @@ class HomeController extends Controller
             'address' => 'required',
             'phone' => 'required',
         ]);
+        if ($request->file('img')){
+            $img = $this->moveFile($request);
+            $request = $request->except('_token');
+            $request['img'] = $img;
+        } else {
+            $request = $request->except('_token');
+        }
 
-        return Found::create($request->except('_token')) ? redirect('found') : redirect()->back();
+        return Found::create($request) ? redirect('found')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
+    }
+
+    /**
+     * 删除招领信息
+     * 
+     * @param Found $found
+     * @return array
+     * @throws \Exception
+     */
+    public function deleteFound(Found $found)
+    {
+        return $found->delete() ? ['status' => 'success'] : ['status' => 'error'];
     }
 
     /**
@@ -165,7 +211,19 @@ class HomeController extends Controller
             'phone' => 'required'
         ]);
 
-        return Lost::create($request->except('_token')) ? redirect('lost') : redirect()->back();
+        return Lost::create($request->except('_token')) ? redirect('lost')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
+    }
+
+    /**
+     * 删除失物信息
+     *
+     * @param Lost $lost
+     * @return array
+     * @throws \Exception
+     */
+    public function deleteLost(Lost $lost)
+    {
+        return $lost->delete() ? ['status' => 'success'] : ['status' => 'error'];
     }
 
     /**
@@ -181,7 +239,7 @@ class HomeController extends Controller
             'content' => 'required'
         ]);
         
-        return Post::create($request->except('_token')) ? redirect('playground') : redirect()->back();
+        return Post::create($request->except('_token')) ? redirect('playground')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -200,7 +258,7 @@ class HomeController extends Controller
             'email'         => 'required|email'
         ]);
 
-        return Course::create($request->except('_token')) ? redirect('exchange') : redirect()->back();
+        return Course::create($request->except('_token')) ? redirect('exchange')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -238,7 +296,7 @@ class HomeController extends Controller
         }
 
 
-        return Sell::create($request) ? redirect('sell') : redirect()->back();
+        return Sell::create($request) ? redirect('sell')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -271,7 +329,7 @@ class HomeController extends Controller
             'email'   => 'required',
         ]);
         
-        return PartTime::create($request->except('_token')) ? redirect('partTime') : redirect()->back();
+        return PartTime::create($request->except('_token')) ? redirect('partTime')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -297,6 +355,13 @@ class HomeController extends Controller
         return view('wanshiwu.partTime.edit',compact('partTime'));
     }
 
+    /**
+     * 修改一条兼职信息
+     *
+     * @param PartTime $partTime
+     * @param Request $request
+     * @return mixed
+     */
     public function editPartTime(PartTime $partTime,Request $request)
     {
         $this->validate($request,[
@@ -308,7 +373,7 @@ class HomeController extends Controller
             'email'   => 'required'
         ]);
         
-        return $partTime->update($request->except(['_token','_method'])) ? redirect('partTime/detail/'.$partTime->id) : redirect()->back();
+        return $partTime->update($request->except(['_token','_method'])) ? redirect('partTime/detail/'.$partTime->id)->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
     }
 
     /**
@@ -336,7 +401,13 @@ class HomeController extends Controller
     {
         return view('wanshiwu.transport.detail',compact('transport'));
     }
-    
+
+    /**
+     * 添加一条快递帮取信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function addTransport(Request $request)
     {
         $this->validate($request,[
@@ -349,7 +420,7 @@ class HomeController extends Controller
             'consigneeAddress' => 'required',
         ]);
         
-        return Transport::create($request->except('_token')) ? redirect('transport') : redirect()->back();
+        return Transport::create($request->except('_token')) ? redirect('transport')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -363,7 +434,7 @@ class HomeController extends Controller
         $transport->condition = false;
         $transport->save();
         $id = $transport->transport_user->id;
-        return TransportUser::where('id',"$id")->delete() ? redirect('transport') : redirect()->back();
+        return TransportUser::where('id',"$id")->delete() ? redirect('transport')->with(['status' => 'success','message' => '成功取消该订单']) : redirect()->back()->with(['status' => 'error','message' => '取消失败']);
     }
 
     /**
@@ -377,7 +448,13 @@ class HomeController extends Controller
     {
         return $transport->delete() ? ['status' => 'success'] : ['status' => 'error'];
     }
-    
+
+    /**
+     * 添加一条课程交换评论信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function commentExchange(Request $request)
     {
         $this->validate($request,[
@@ -388,7 +465,7 @@ class HomeController extends Controller
             'phone'         => 'required',
         ]);
 
-        return CourseComment::create($request->except('_token')) ? redirect('exchange/detail/'.$request->input('course_id')) : redirect()->back();
+        return CourseComment::create($request->except('_token')) ? redirect('exchange/detail/'.$request->input('course_id'))->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -403,12 +480,25 @@ class HomeController extends Controller
     {
         return $courseComment->delete() ? ['status' => 'success'] : ['status' => 'error'];
     }
-    
+
+    /**
+     * 显示课程交换编辑页面
+     *
+     * @param Course $course
+     * @return mixed
+     */
     public function showExchangeEdit(Course $course)
     {
         return view('wanshiwu.exchange.edit',compact('course'));
     }
 
+    /**
+     * 修改课程交换信息
+     *
+     * @param Request $request
+     * @param Course $course
+     * @return mixed
+     */
     public function editExchange(Request $request,Course $course)
     {
         $this->validate($request,[
@@ -419,14 +509,27 @@ class HomeController extends Controller
             'phone'         => 'required|max:11|min:6',
         ]);
 
-        return $course->update($request->except(['_token','_method'])) ? redirect('exchange/detail/'.$course->id) : redirect()->back();
+        return $course->update($request->except(['_token','_method'])) ? redirect('exchange/detail/'.$course->id)->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
     }
-    
+
+    /**
+     * 显示二手交易编辑页面
+     *
+     * @param Sell $sell
+     * @return mixed
+     */
     public function showSellEdit(Sell $sell)
     {
         return view('wanshiwu.sellEdit',compact('sell'));
     }
 
+    /**
+     * 修改二手交易信息
+     *
+     * @param Request $request
+     * @param Sell $sell
+     * @return mixed
+     */
     public function editSell(Request $request,Sell $sell)
     {
         $this->validate($request,[
@@ -444,6 +547,6 @@ class HomeController extends Controller
             $request = $request->except(['_token','_method']);
         }
 
-        return $sell->update($request) ? redirect('sell/detail/'.$sell->id) : redirect()->back();
+        return $sell->update($request) ? redirect('sell/detail/'.$sell->id)->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
     }
 }

@@ -15,7 +15,7 @@
                     <div class="form-group{{ $errors->has('old_password') ? 'has-error' : '' }}">
                         <label for="old_password" class="col-md-3 control-label">原密码:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="old_password" name="old_password" value="">
+                            <input type="password" class="form-control" id="old_password" name="old_password" value="">
                             @if($errors->has('old_password'))
                                 <div class="help-block">
                                     <span>{{ $errors->first('old_password') }}</span>
@@ -26,7 +26,7 @@
                     <div class="form-group{{ $errors->has('password') ? 'has-error' : '' }}">
                         <label for="password" class="col-md-3 control-label">新的密码:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="password" name="password" value="">
+                            <input type="password" class="form-control" id="password" name="password" value="">
                             @if($errors->has('password'))
                                 <div class="help-block">
                                     <span>{{ $errors->first('password') }}</span>
@@ -37,7 +37,7 @@
                     <div class="form-group{{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                         <label for="password_confirmation" class="col-md-3 control-label">确认新的密码:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="password_confirmation" name="password_confirmation" value="">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" value="">
                             @if($errors->has('password_confirmation'))
                                 <div class="help-block">
                                     <span>{{ $errors->first('password_confirmation') }}</span>

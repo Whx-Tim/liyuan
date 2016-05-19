@@ -30,10 +30,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('owner/{user}','HomeController@showOwner');
     Route::get('modifyInfo','HomeController@showEditOwner');
     Route::get('bindingEmail','HomeController@showEmail');
-    Route::post('bindingEmail/{user}','HomeController@bindingEmail');
+    
     Route::get('bindingPhone','HomeController@showPhone');
     Route::get('modifyPassword','HomeController@showPassword');
     Route::get('feedback','HomeController@showFeedback');
+    Route::post('bindingEmail/{user}','HomeController@bindingEmail');
+    Route::patch('modifyPassword/{user}','HomeController@updatePassword');
+    Route::patch('modifyInfo/{user}','HomeController@updateOwnerInfo');
     
 });
 
@@ -86,12 +89,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('publish','HomeController@showFoundPublish');
         Route::get('detail/{found}','GuestController@showFoundDetail');
         Route::post('','HomeController@createFound');
+        Route::delete('/{found}','HomeController@deleteFound');
     });
     Route::group(['prefix' => 'lost'], function () {
         Route::get('','GuestController@showLost');
         Route::get('publish','HomeController@showLostPublish');
         Route::get('detail/{lost}','GuestController@showLostDetail');
         Route::post('add','HomeController@createLost');
+        Route::delete('/{lost}','HomeController@deleteLost');
     });
     Route::group(['prefix' => 'playground'], function () {
         Route::get('','GuestController@showPlayground');
@@ -99,6 +104,15 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('','HomeController@createPlayground');
     });
     
+});
+
+Route::group(['prefix' => 'admin','middleware' => ['web','auth','role:admin']], function(){
+    Route::get('','AdminController@index');
+    
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('','AdminController@showUser');
+        Route::delete('/{user}','AdminController@deleteUser');
+    });
 });
 
 

@@ -36,9 +36,11 @@
                                     <td>{{ $sell->created_at }}</td>
                                     <td><a href="{{ url('sell/detail/'.$sell->id) }}">{{ $sell->name }}</a></td>
                                     <td>{{ $sell->username }}</td>
-                                    <td class="actions-hover actions-fade">
-                                        <a data-id="{{ $sell->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i></a>
-                                    </td>
+                                    @if(Auth::check() && auth()->user()->isAdmin())
+                                        <td class="actions-hover actions-fade">
+                                            <a data-id="{{ $sell->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

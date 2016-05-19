@@ -76,6 +76,7 @@ class AuthController extends Controller
             'bornDate' => $data['bornDate'],
             'content' => $data['content'],
             'stuNumber' => $data['stuNumber'],
+            'role' => 'user'
         ]);
     }
 }

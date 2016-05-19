@@ -25,16 +25,19 @@
         }
     </style>
 </head>
-<body id="app-layout" style="background-color: #5bc0de">
-@include('nav')
-<div class="container">
-    <div class="col-md-12">
-        @yield('content')
+<body id="app-layout">
+    @include('layouts.admin-nav')
+    <div class="container">
+        <div class="col-md-2">
+            @include('layouts.nav-sidebar')
+        </div>
+        <div class="col-md-10">
+            @include('layouts.breadcrumb')
+            @yield('content')
+        </div>
     </div>
-</div>
+
 @include('footer')
-
-
         <!-- JavaScripts -->
 <script type="text/javascript" src="{{ url('js/jquery-1.10.2.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap.min.js') }}"></script>
@@ -43,7 +46,6 @@
 <script src="//cdn.bootcss.com/select2/4.0.2-rc.1/js/select2.min.js"></script>
 <script src="//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script type="text/javascript" src="{{ url('js/main.js') }}"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 <script type="text/javascript">
     $(function () {
@@ -70,7 +72,7 @@
         "hideMethod": "fadeOut"
     }
     @if(session()->has('status'))
-        toastr['{{ session('status') == 'error' ? 'error' : 'success' }}']('{{ session('message') }}');
+            toastr['{{ session('status') == 'error' ? 'error' : 'success' }}']('{{ session('message') }}');
     @endif
 </script>
 </body>

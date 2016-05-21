@@ -206,10 +206,10 @@ class HomeController extends Controller
     public function createLost(Request $request)
     {
         $this->validate($request,[
-            'info' => 'required',
-            'type' => 'required',
+            'info'    => 'required',
+            'type'    => 'required',
             'address' => 'required',
-            'phone' => 'required'
+            'phone'   => 'required'
         ]);
 
         return Lost::create($request->except('_token')) ? redirect('lost')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);

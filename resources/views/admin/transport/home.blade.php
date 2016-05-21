@@ -22,7 +22,7 @@
             @foreach($transports as $transport)
                 <tr>
                     <td>{{ $transport->id }}</td>
-                    <td>{{ $transport->address }}</td>
+                    <td><a href="{{ url('admin/transport/detail/'.$transport->id) }}">{{ $transport->address }}</a></td>
                     <td>{{ $transport->company }}</td>
                     <td>{{ $transport->reward }}</td>
                     <td>{{ $transport->user->username }}</td>

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Feedback;
+use App\Found;
+use App\Lost;
 use App\PartTime;
+use App\Post;
 use App\Sell;
 use App\Transport;
 use App\User;
@@ -18,6 +22,23 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.home');
+    }
+
+    /**
+     * 上传图片功能
+     *
+     * @param Request $request
+     * @param string $name
+     * @return string
+     */
+    protected function moveFile(Request $request, $name = 'img')
+    {
+        $file = $request->file($name);
+        $name = sha1(time() . $file->getClientOriginalName()) . "." . $file->extension();
+        $file->move('images', $name);
+        $uri = '/images/' . $name;
+
+        return $uri;
     }
 
     /**
@@ -141,6 +162,10 @@ class AdminController extends Controller
      */
     public function deleteCourse(Course $course)
     {
+        foreach ($course->comments as $comment){
+            $comment->delete();
+        }
+        
         return $course->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
     }
 
@@ -285,23 +310,285 @@ class AdminController extends Controller
     {
         return $partTime->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
     }
-    
+
+    /**
+     * 显示快递帮取页面
+     *
+     * @return mixed
+     */
     public function showTransport()
     {
         $transports = Transport::all();
         
         return view('admin.transport.home',compact('transports'));
     }
-    
+
+    /**
+     * 显示快递帮取编辑页面
+     *
+     * @param Transport $transport
+     * @return mixed
+     */
     public function showEditTransport(Transport $transport)
     {
         return view('admin.transport.edit',compact('transport'));
     }
-    
+
+    /**
+     * 显示快递帮取详情页面
+     *
+     * @param Transport $transport
+     * @return mixed
+     */
     public function showTransportDetail(Transport $transport)
     {
         return view('admin.transport.detail',compact('transport'));
     }
-    
-    
+
+    /**
+     * 修改快递帮取信息
+     *
+     * @param Request $request
+     * @param Transport $transport
+     * @return mixed
+     */
+    public function editTransport(Request $request,Transport $transport)
+    {
+        $this->validate($request,[
+            'address'          => 'required',
+            'time'             => 'required',
+            'reward'           => 'required',
+            'company'          => 'required',
+            'consignee'        => 'required',
+            'phone'            => 'required',
+            'ConsigneeAddress' => 'required',
+        ]);
+
+        return $transport->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
+    }
+
+    /**
+     * 删除快递帮取信息
+     *
+     * @param Transport $transport
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deleteTransport(Transport $transport)
+    {
+        return $transport->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
+    }
+
+    /**
+     * 显示操场管理页面
+     *
+     * @return mixed
+     */
+    public function showPlayground()
+    {
+        $playgrounds = Post::all();
+
+        return view('admin.playground.home',compact('playgrounds'));
+    }
+
+    /**
+     * 显示操场管理详情页面
+     *
+     * @param Post $post
+     * @return mixed
+     */
+    public function showPlaygroundDetail(Post $post)
+    {
+        return view('admin.playground.detail',compact('post'));
+    }
+
+    /**
+     * 删除一条帖子
+     *
+     * @param Post $post
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deletePlayground(Post $post)
+    {
+        foreach ($post->replies as $reply){
+            $reply->delete();
+        }
+
+        return $post->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
+    }
+
+    /**
+     * 显示招领管理页面
+     *
+     * @return mixed
+     */
+    public function showFound()
+    {
+        $founds = Found::all();
+
+        return view('admin.found.home',compact('founds'));
+    }
+
+    /**
+     * 显示招领管理编辑页面
+     *
+     * @param Found $found
+     * @return mixed
+     *
+     */
+    public function showEditFound(Found $found)
+    {
+        return view('admin.found.edit',compact('found'));
+    }
+
+    /**
+     * 显示招领管理详情页面
+     *
+     * @param Found $found
+     * @return mixed
+     */
+    public function showFoundDetail(Found $found)
+    {
+        return view('admin.found.detail',compact('found'));
+    }
+
+    /**
+     * 修改招领信息
+     *
+     * @param Request $request
+     * @param Found $found
+     * @return mixed
+     */
+    public function editFound(Request $request,Found $found)
+    {
+        $this->validate($request,[
+            'name'    => 'required',
+            'type'    => 'required',
+            'address' => 'required',
+            'phone'   => 'required'
+        ]);
+        if ($request->file('img')){
+            $img = $this->moveFile($request);
+            $request = $request->except(['_token','_method']);
+            $request['img'] = $img;
+        } else {
+            $request = $request->except(['_token','_method']);
+        }
+
+        return $found->update($request) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
+    }
+
+    /**
+     * 删除招领信息
+     *
+     * @param Found $found
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deleteFound(Found $found)
+    {
+        return $found->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' =>'删除失败！']);
+    }
+
+    /**
+     * 显示失物管理页面
+     *
+     * @return mixed
+     */
+    public function showLost()
+    {
+        $losts = Lost::all();
+
+        return view('admin.lost.home',compact('losts'));
+    }
+
+    /**
+     * 显示失物管理编辑页面
+     *
+     * @param Lost $lost
+     * @return mixed
+     */
+    public function showEditLost(Lost $lost)
+    {
+        return view('admin.lost.edit',compact('lost'));
+    }
+
+    /**
+     * 显示失物管理详情页面
+     *
+     * @param Lost $lost
+     * @return mixed
+     */
+    public function showLostDetail(Lost $lost)
+    {
+        return view('admin.lost.detail',compact('lost'));
+    }
+
+    /**
+     * 修改失物信息
+     *
+     * @param Request $request
+     * @param Lost $lost
+     * @return mixed
+     */
+    public function editLost(Request $request,Lost $lost)
+    {
+        $this->validate($request,[
+            'info'    => 'required',
+            'type'    => 'required',
+            'address' => 'required',
+            'phone'   => 'required'
+        ]);
+
+        return $lost->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
+    }
+
+    /**
+     * 删除失物信息
+     *
+     * @param Lost $lost
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deleteLost(Lost $lost)
+    {
+        return $lost->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->whit(['status' => 'error' ,'message' => '删除失败！']);
+    }
+
+
+    /**
+     * 显示意见反馈页面
+     *
+     * @return mixed
+     */
+    public function showFeedback()
+    {
+        $feedbacks = Feedback::all();
+
+        return view('admin.feedback.home',compact('feedbacks'));
+    }
+
+    /**
+     * 显示意见反馈详情页面
+     *
+     * @param Feedback $feedback
+     * @return mixed
+     */
+    public function showFeedbackDetail(Feedback $feedback)
+    {
+        return view('admin.feedback.detail',compact('feedback'));
+    }
+
+    /**
+     * 删除意见反馈
+     *
+     * @param Feedback $feedback
+     * @return mixed
+     * @throws \Exception
+     */
+    public function deleteFeedback(Feedback $feedback)
+    {
+        return $feedback->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
+    }
 }

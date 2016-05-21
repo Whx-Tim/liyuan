@@ -144,6 +144,30 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth','role:admin']], 
         Route::patch('edit/{transport}','AdminController@editTransport');
         Route::delete('/{transport}','AdminController@deleteTransport');
     });
+    Route::group(['prefix' => 'playground'], function() {
+        Route::get('','AdminController@showPlayground');
+        Route::get('detail/{post}','AdminController@showPlaygroundDetail');
+        Route::delete('/{post}','AdminController@deletePlayground');
+    });
+    Route::group(['prefix' => 'found'], function() {
+        Route::get('','AdminController@showFound');
+        Route::get('edit/{found}','AdminController@showEditFound');
+        Route::get('detail/{found}','AdminController@showFoundDetail');
+        Route::patch('edit/{found}','AdminController@editFound');
+        Route::delete('/{found}','AdminController@deleteFound');
+    });
+    Route::group(['prefix' => 'lost'], function () {
+        Route::get('','AdminController@showLost');
+        Route::get('edit/{lost}','AdminController@showEditLost');
+        Route::get('detail/{lost}','AdminController@showLostDetail');
+        Route::patch('edit/{lost}','AdminController@editLost');
+        Route::delete('/{lost}','AdminController@deleteLost');
+    });
+    Route::group(['prefix' => 'feedback'], function () {
+        Route::get('','AdminController@showFeedback');
+        Route::get('detail/{feedback}','AdminController@showFeedbackDetail');
+        Route::delete('/{feedback}','AdminController@deleteFeedback');
+    });
 });
 
 

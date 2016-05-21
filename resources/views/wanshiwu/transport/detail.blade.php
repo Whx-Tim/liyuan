@@ -34,8 +34,10 @@
                     </td>
                 </tr>
                 <tr><td class="actions-hover actions-fade">
-                        <a href="{{ url('transportEdit') }}"><i class="fa fa-pencil"></i>仅发帖者&管理员可见</a>
-                        <a href="#"><i class="fa fa-trash-o">仅发帖者&管理员可见</i></a>
+                        @if(($transport->user->id == Auth::user()->id) || auth()->user()->isAdmin())
+                            <a href="{{ url('transport/edit/'.$transport->id) }}"><i class="fa fa-pencil"></i>编辑</a>
+                            <a data-id="{{ $transport->id }}" href="javascript:;" onclick="Delete($(this))"><i class="fa fa-trash-o">删除</i></a>
+                        @endif
                     </td>
                 </tr>
                 </tbody>
@@ -45,3 +47,5 @@
         </div>
     </div>
 @endsection
+
+@include('deleteDetail',['url' => 'transport'])

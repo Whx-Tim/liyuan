@@ -46,7 +46,7 @@
                                     </div></td></tr>
                             <tr><td class="actions-hover actions-fade">
                                     @if(Auth::check())
-                                        @if(Auth::user()->id == $partTime->user->id)
+                                        @if(Auth::user()->id == $partTime->user->id || auth()->user()->isAdmin())
                                             <a href="{{ url('partTime/edit/' . $partTime->id) }}"><i class="fa fa-pencil"></i>发帖人&管理员</a>
                                             <a data-id="{{ $partTime->id }}" href="javascript:;"  onclick="Delete($(this))"><i class="fa fa-trash-o"></i>发帖人&管理员</a>
                                         @endif

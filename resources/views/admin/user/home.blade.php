@@ -27,7 +27,6 @@
                             {{ method_field('delete') }}
                             <button type="submit" class="btn btn-danger btn-radius">删除</button>
                         </form>
-                        {{--<a data-id="{{ $user->id }}" href="javascript:;" onclick="adminDelete($(this))" class="btn btn-danger btn-radius">删除</a>--}}
                     </td>
                 </tr>
             @endforeach
@@ -36,4 +35,3 @@
     </div>
 @endsection
 
-{{--@include('admin.delete',['url' => 'admin/user'])--}}

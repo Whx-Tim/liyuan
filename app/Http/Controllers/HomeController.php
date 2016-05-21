@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\CourseComment;
+use App\Feedback;
 use App\Found;
 use App\Lost;
 use App\PartTime;
@@ -548,5 +549,41 @@ class HomeController extends Controller
         }
 
         return $sell->update($request) ? redirect('sell/detail/'.$sell->id)->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
+    }
+
+    /**
+     * 保存意见反馈信息
+     * 
+     * @param Request $request
+     * @return mixed
+     */
+    public function saveFeedback(Request $request)
+    {
+        $this->validate($request,[
+            'title'   => 'required',
+            'content' => 'required',
+        ]);
+        
+        return Feedback::create($request->except('_token')) ? redirect('feedback')->with(['status' => 'success','message' => '反馈成功!']) : redirect()->back()->with(['status' => 'error','message' => '反馈失败！']);
+    }
+    
+    public function showEditTransport(Transport $transport)
+    {
+        return view('wanshiwu.transport.edit',compact('transport'));
+    }
+    
+    public function editTransport(Request $request,Transport $transport)
+    {
+        $this->validate($request,[
+            'address'          => 'required',
+            'time'             => 'required',
+            'reward'           => 'required',
+            'company'          => 'required',
+            'consignee'        => 'required',
+            'phone'            => 'required',
+            'ConsigneeAddress' => 'required',
+        ]);
+        
+        return $transport->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
     }
 }

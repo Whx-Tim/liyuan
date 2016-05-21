@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <a href="{{ url('sell/detail/',$sell->id) }}" class="btn btn-danger btn-radius btn-block">返回</a>
+                                <a href="{{ url('sell/detail/'.$sell->id) }}" class="btn btn-danger btn-radius btn-block">返回</a>
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary btn-radius btn-block">确认修改</button>

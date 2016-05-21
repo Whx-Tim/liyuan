@@ -27,7 +27,7 @@
 </head>
 <body id="app-layout">
     @include('layouts.admin-nav')
-    <div class="container">
+    <div class="container-fluid">
         <div class="col-md-2">
             @include('layouts.nav-sidebar')
         </div>

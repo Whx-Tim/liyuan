@@ -34,6 +34,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('bindingPhone','HomeController@showPhone');
     Route::get('modifyPassword','HomeController@showPassword');
     Route::get('feedback','HomeController@showFeedback');
+    Route::post('feedback','HomeController@saveFeedback');
     Route::post('bindingEmail/{user}','HomeController@bindingEmail');
     Route::patch('modifyPassword/{user}','HomeController@updatePassword');
     Route::patch('modifyInfo/{user}','HomeController@updateOwnerInfo');
@@ -80,8 +81,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('','GuestController@showTransport');
         Route::get('detail/{transport}','HomeController@showTransportDetail');
         Route::get('cancel/{transport}','HomeController@cancelTransport');
+        Route::get('edit/{transport}','HomeController@showEditTransport');
         Route::post('detail/{transport}','HomeController@showTransportDetailAccept');
         Route::post('','HomeController@addTransport');
+        Route::patch('edit/{transport}','HomeController@editTransport');
         Route::delete('/{transport}','HomeController@deleteTransport');
     });
     Route::group(['prefix' => 'found'], function () {
@@ -112,6 +115,34 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth','role:admin']], 
     Route::group(['prefix' => 'user'], function() {
         Route::get('','AdminController@showUser');
         Route::delete('/{user}','AdminController@deleteUser');
+    });
+    Route::group(['prefix' => 'course'], function() {
+        Route::get('','AdminController@showCourse');
+        Route::get('edit/{course}','AdminController@showEditCourse');
+        Route::get('detail/{course}','AdminController@showCourseDetail');
+        Route::patch('edit/{course}','AdminController@editCourse');
+        Route::delete('/{course}','AdminController@deleteCourse');
+    });
+    Route::group(['prefix' => 'sell'], function () {
+        Route::get('','AdminController@showSell');
+        Route::get('edit/{sell}','AdminController@showEditSell');
+        Route::get('detail/{sell}','AdminController@showSellDetail');
+        Route::patch('edit/{sell}','AdminController@editSell');
+        Route::delete('/{sell}','AdminController@deleteSell');
+    });
+    Route::group(['prefix' => 'partTime'], function () {
+        Route::get('','AdminController@showPartTime');
+        Route::get('edit/{partTime}','AdminController@showEditPartTime');
+        Route::get('detail/{partTime}','AdminController@showPartTimeDetail');
+        Route::patch('edit/{partTime}','AdminController@editPartTime');
+        Route::delete('/{partTime}','AdminController@deletePartTime');
+    });
+    Route::group(['prefix' => 'transport'], function () {
+        Route::get('','AdminController@showTransport');
+        Route::get('edit/{transport}','AdminController@showEditTransport');
+        Route::get('detail/{transport}','AdminController@showTransportDetail');
+        Route::patch('edit/{transport}','AdminController@editTransport');
+        Route::delete('/{transport}','AdminController@deleteTransport');
     });
 });
 

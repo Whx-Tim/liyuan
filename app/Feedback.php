@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback extends Model
 {
+    protected $guarded = [];
+
     /**
      * 一个feedback对应一个user
      * 

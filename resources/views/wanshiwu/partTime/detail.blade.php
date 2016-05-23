@@ -56,8 +56,6 @@
                         </table>
                     </div>
                 </div>
-                @include('wanshiwu.partTime.comment')
-                @include('wanshiwu.partTime.comment_modal')
             </div>
         </div>
     </div>

@@ -13,10 +13,11 @@
                                 <h1>操场</h1>
                             </div>
                             <div class="panel-body">
-                                <form action="#" class="form-horizontal" method="post">
+                                <form action="{{ url('playground/search') }}" class="form-horizontal" method="post">
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="请输入标题（关键字）">
+                                            <input type="text" name="key" id="key" class="form-control" placeholder="请输入标题（关键字）">
                                             <div class="input-group-btn">
                                                 <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
                                             </div>

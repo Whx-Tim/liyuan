@@ -10,10 +10,11 @@
                 <small>失物招领</small>
             </div>
             <div class="panel-body">
-                <form action="#" method="post" class="form-horizontal" role="form">
+                <form action="{{ url('found/search') }}" method="post" class="form-horizontal" role="form">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search" id="search" placeholder="请输入想要查找的信息（关键字）">
+                            <input type="text" class="form-control" name="key" id="key" placeholder="请输入想要查找的信息（关键字）">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-success btn-radius"><i class="fa fa-search"></i></button>
                             </div>

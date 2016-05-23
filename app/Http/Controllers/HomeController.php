@@ -114,6 +114,7 @@ class HomeController extends Controller
     public function updatePassword(Request $request,User $user)
     {
         $this->validate($request,[
+            'old_password' => 'required|min:6|max:20',
             'password' => 'required|confirmed'
         ]);
         if (Hash::check($request->input('old_password'),$user->password)){
@@ -253,10 +254,11 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required',
+            'course_number' => 'required|min:10|max:10|integer',
             'time'          => 'required',
             'teacher'       => 'required',
-            'email'         => 'required|email'
+            'email'         => 'required|email',
+            'phone'         => 'regex:/^1[34578]\d{9}$/'
         ]);
 
         return Course::create($request->except('_token')) ? redirect('exchange')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
@@ -286,7 +288,8 @@ class HomeController extends Controller
             'title' => 'required',
             'name'  => 'required',
             'price' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
+            'phone' => 'regex:/^1[34578]\d{9}$/'
         ]);
         if ($request->file('img')){
             $img = $this->moveFile($request);
@@ -326,8 +329,8 @@ class HomeController extends Controller
             'address' => 'required',
             'salary'  => 'required',
             'time'    => 'required',
-            'phone'   => 'required',
-            'email'   => 'required',
+            'phone'   => 'required|regex:/^1[34578]\d{9}$/',
+            'email'   => 'required|email',
         ]);
         
         return PartTime::create($request->except('_token')) ? redirect('partTime')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
@@ -370,8 +373,8 @@ class HomeController extends Controller
             'address' => 'required',
             'salary'  => 'required',
             'time'    => 'required',
-            'phone'   => 'required',
-            'email'   => 'required'
+            'phone'   => 'required|regex:/^1[34578]\d{9}$/',
+            'email'   => 'required|email'
         ]);
         
         return $partTime->update($request->except(['_token','_method'])) ? redirect('partTime/detail/'.$partTime->id)->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
@@ -417,7 +420,7 @@ class HomeController extends Controller
             'reward'           => 'required',
             'company'          => 'required',
             'consignee'        => 'required',
-            'phone'            => 'required',
+            'phone'            => 'required|regex:/^1[34578]\d{9}$/',
             'consigneeAddress' => 'required',
         ]);
         
@@ -479,7 +482,7 @@ class HomeController extends Controller
      */
     public function deleteExchangeComment(CourseComment $courseComment)
     {
-        return $courseComment->delete() ? ['status' => 'success'] : ['status' => 'error'];
+        return $courseComment->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
     }
 
     /**
@@ -504,10 +507,10 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required',
+            'course_number' => 'required|min:10|max:10',
             'time'          => 'required',
             'teacher'       => 'required',
-            'phone'         => 'required|max:11|min:6',
+            'phone'         => 'required|regex:/^1[34578]\d{9}$/',
         ]);
 
         return $course->update($request->except(['_token','_method'])) ? redirect('exchange/detail/'.$course->id)->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
@@ -537,7 +540,8 @@ class HomeController extends Controller
             'title' => 'required',
             'name'  => 'required',
             'price' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
+            'phone' => 'regex:/^1[34578]\d{9}$/'
         ]);
 
         if($request->file('img')){
@@ -566,12 +570,25 @@ class HomeController extends Controller
         
         return Feedback::create($request->except('_token')) ? redirect('feedback')->with(['status' => 'success','message' => '反馈成功!']) : redirect()->back()->with(['status' => 'error','message' => '反馈失败！']);
     }
-    
+
+    /**
+     * 显示快递帮取编辑页面
+     *
+     * @param Transport $transport
+     * @return mixed
+     */
     public function showEditTransport(Transport $transport)
     {
         return view('wanshiwu.transport.edit',compact('transport'));
     }
-    
+
+    /**
+     * 修改快递帮取信息
+     *
+     * @param Request $request
+     * @param Transport $transport
+     * @return mixed
+     */
     public function editTransport(Request $request,Transport $transport)
     {
         $this->validate($request,[
@@ -580,10 +597,11 @@ class HomeController extends Controller
             'reward'           => 'required',
             'company'          => 'required',
             'consignee'        => 'required',
-            'phone'            => 'required',
+            'phone'            => 'required|regex:/^1[34578]\d{9}$/',
             'ConsigneeAddress' => 'required',
         ]);
         
         return $transport->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
     }
+    
 }

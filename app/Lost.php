@@ -18,4 +18,15 @@ class Lost extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * 失物信息的搜索功能
+     * 
+     * @param $key
+     * @return mixed
+     */
+    public static function search($key)
+    {
+        return static::where('info','like',"%{$key}%");
+    }
 }

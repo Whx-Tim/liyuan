@@ -25,4 +25,14 @@ class Course extends Model
     public function comments(){
         return $this->hasMany(CourseComment::class);
     }
+
+    public static function search($key)
+    {
+        return static::where('name','like',"%{$key}%")
+                        ->orwhere('course_number','like',"%{$key}%")
+                        ->orwhere('time','like',"%{$key}%")
+                        ->orwhere('teacher','like',"%{$key}%")
+                        ->orwhere('want_name','like',"%{$key}%")
+                        ->orwhere('want_teacher','like',"%{$key}%");
+    }
 }

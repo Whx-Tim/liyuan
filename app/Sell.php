@@ -16,4 +16,9 @@ class Sell extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public static function search($key)
+    {
+        return static::where('title','like',"%{$key}%");
+    }
 }

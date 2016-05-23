@@ -13,7 +13,7 @@
                     {{ csrf_field() }}
                     {{ method_field('patch') }}
                     <div class="form-group{{ $errors->has('old_password') ? 'has-error' : '' }}">
-                        <label for="old_password" class="col-md-3 control-label">原密码:</label>
+                        <label for="old_password" class="col-md-4 control-label">原密码:</label>
                         <div class="col-md-6">
                             <input type="password" class="form-control" id="old_password" name="old_password" value="">
                             @if($errors->has('old_password'))
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('password') ? 'has-error' : '' }}">
-                        <label for="password" class="col-md-3 control-label">新的密码:</label>
+                        <label for="password" class="col-md-4 control-label">新的密码:</label>
                         <div class="col-md-6">
                             <input type="password" class="form-control" id="password" name="password" value="">
                             @if($errors->has('password'))
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                        <label for="password_confirmation" class="col-md-3 control-label">确认新的密码:</label>
+                        <label for="password_confirmation" class="col-md-4 control-label">确认新的密码:</label>
                         <div class="col-md-6">
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" value="">
                             @if($errors->has('password_confirmation'))

@@ -54,17 +54,17 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('detail/{sell}','GuestController@showSellDetail');
         Route::get('edit/{sell}','HomeController@showSellEdit');
         Route::post('','HomeController@addSell');
+        Route::post('search','GuestController@searchSell');
         Route::patch('/{sell}','HomeController@editSell');
         Route::delete('/{sell}','HomeController@deleteSell');
     });
-    
-    
     Route::group(['prefix' => 'exchange'], function () {
         Route::get('','GuestController@showCourseHome');
         Route::get('detail/{course}','GuestController@showCourseDetail');
         Route::get('edit/{course}','HomeController@showExchangeEdit');
         Route::post('','HomeController@addExchange');
         Route::post('comment','HomeController@commentExchange');
+        Route::post('search','GuestController@searchCourse');
         Route::patch('/{course}','HomeController@editExchange');
         Route::delete('/{course}','HomeController@deleteExchange');
         Route::delete('comment/{courseComment}','HomeController@deleteExchangeComment');
@@ -74,6 +74,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('detail/{partTime}','GuestController@showPartTimeDetail');
         Route::get('edit/{partTime}','HomeController@showeditPartTime');
         Route::post('','HomeController@addPartTime');
+        Route::post('search','GuestController@searchPartTime');
         Route::patch('edit/{partTime}','HomeController@editPartTime');
         Route::delete('/{partTime}','HomeController@deletePartTime');
     });
@@ -83,6 +84,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('cancel/{transport}','HomeController@cancelTransport');
         Route::get('edit/{transport}','HomeController@showEditTransport');
         Route::post('detail/{transport}','HomeController@showTransportDetailAccept');
+        Route::post('search','GuestController@searchTransport');
         Route::post('','HomeController@addTransport');
         Route::patch('edit/{transport}','HomeController@editTransport');
         Route::delete('/{transport}','HomeController@deleteTransport');
@@ -92,6 +94,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('publish','HomeController@showFoundPublish');
         Route::get('detail/{found}','GuestController@showFoundDetail');
         Route::post('','HomeController@createFound');
+        Route::post('search','GuestController@searchFound');
         Route::delete('/{found}','HomeController@deleteFound');
     });
     Route::group(['prefix' => 'lost'], function () {
@@ -99,12 +102,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('publish','HomeController@showLostPublish');
         Route::get('detail/{lost}','GuestController@showLostDetail');
         Route::post('add','HomeController@createLost');
+        Route::post('search','GuestController@searchLost');
         Route::delete('/{lost}','HomeController@deleteLost');
     });
     Route::group(['prefix' => 'playground'], function () {
         Route::get('','GuestController@showPlayground');
         Route::get('detail/{post}','GuestController@showPlaygroundDetail');
         Route::post('','HomeController@createPlayground');
+        Route::post('search','GuestController@searchPlayground');
     });
     
 });

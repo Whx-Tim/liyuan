@@ -41,7 +41,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     @foreach($user->sells as $sell)
-                        <li><a href="{{ url('sellDetail/'.$sell->id) }}">{{ $sell->title }}</a></li>
+                        <li><a href="{{ url('sell/detail/'.$sell->id) }}">{{ $sell->title }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -53,7 +53,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     @foreach($user->courses as $course)
-                        <li><a href="{{ url('exchangeDetail/'.$course->id) }}">{{ $course->name }}换{{ $course->want_name }}</a></li>
+                        <li><a href="{{ url('exchange/detail/'.$course->id) }}">{{ $course->name }}换{{ $course->want_name }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -65,7 +65,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     @foreach($user->part_times as $parttime)
-                        <li><a href="{{ url('parttimeDetail'.$parttime->id) }}">{{ $parttime->title }}</a></li>
+                        <li><a href="{{ url('parttime/detail/'.$parttime->id) }}">{{ $parttime->title }}</a></li>
                     @endforeach    
                 </ul>
             </div>
@@ -77,7 +77,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     @foreach($user->transports as $transport)
-                        <li><a href="{{ url('transportDetail/'.$transport->id) }}">{{ $transport->address }}{{ $transport->time }}</a></li>
+                        <li><a href="{{ url('transport/detail/'.$transport->id) }}">{{ $transport->address }}{{ $transport->time }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -89,7 +89,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     @foreach($user->losts as $lost)
-                        <li><a href="{{ url('lostDetail/'.$lost->id) }}">{{ $lost->info }}</a></li>
+                        <li><a href="{{ url('lost/detail/'.$lost->id) }}">{{ $lost->info }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -101,7 +101,7 @@
             <div class="panel-body">
                 <ul class="list-unstyled">
                     @foreach($user->founds as $found)
-                        <li><a href="{{ url('foundDetail/',$found->id) }}">{{ $found->name }}</a></li>
+                        <li><a href="{{ url('found/detail/',$found->id) }}">{{ $found->name }}</a></li>
                     @endforeach
                 </ul>
             </div>

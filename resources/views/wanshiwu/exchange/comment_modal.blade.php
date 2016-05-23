@@ -63,6 +63,17 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-group{{ $errors->has('notice') ? 'has-error' : '' }}">
+                        <label for="notice" class="col-md-4 control-label">备注:</label>
+                        <div class="col-md-6">
+                            <textarea name="notice" id="notice" class="form-control" cols="30" rows="10">{{ old('notice') }}</textarea>
+                            @if($errors->has('notice'))
+                                <div class="help-block">
+                                    <span>{{ $errors->first('notice') }}</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                     <input type="hidden" name="user_id" value="{!! Auth::user()->id !!}">
                     <input type="hidden" name="course_id" value="{{ $course->id }}">
                 </div>

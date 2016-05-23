@@ -18,4 +18,19 @@ class Found extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * 招领信息的搜索功能
+     *
+     * @param $key
+     * @return mixed
+     *
+     */
+    public static function search($key)
+    {
+        return static::where('name','like',"%{$key}%")
+                        ->orwhere('type','like',"%{$key}%")
+                        ->orwhere('address','like',"%{$key}%")
+                        ->orwhere('location','like',"%{$key}%");
+    }
 }

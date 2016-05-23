@@ -12,4 +12,15 @@ class PartTime extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * PartTime表的模糊查询
+     * 
+     * @param $key
+     * @return mixed
+     */
+    public static function search($key)
+    {
+        return static::where('title','like',"%{$key}%");
+    }
 }

@@ -154,4 +154,95 @@ class GuestController extends Controller
     {
         return view('lost.detail',compact('lost'));
     }
+
+    /**
+     * 搜索课程交换
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchCourse(Request $request)
+    {
+        $courses = Course::search($request->input('key'))->orderBy('created_at','desc')->paginate(15);
+
+        return view('wanshiwu.exchange.home',compact('courses'));
+    }
+
+    /**
+     * 搜索二手交易
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchSell(Request $request)
+    {
+        $sells = Sell::search($request->input('key'))->orderBy('created_at','desc')->paginate(15);
+
+        return view('wanshiwu.second_hand',compact('sells'));
+    }
+
+    /**
+     * 搜索兼职信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchPartTime(Request $request)
+    {
+        $partTimes = PartTime::search($request->input('key'))->orderBy('created_at','desc')->paginate(15);
+
+        return view('wanshiwu.partTime.home',compact('partTimes'));
+    }
+
+    /**
+     * 搜索快递帮取
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchTransport(Request $request)
+    {
+        $transports = Transport::search($request->input('key'))->orderBy('condition')->paginate(9);
+
+        return view('wanshiwu.transport.home',compact('transports'));
+    }
+
+    /**
+     * 搜索招领信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchFound(Request $request)
+    {
+        $founds = Found::search($request->input('key'))->orderBy('created_at','desc')->paginate(10);
+
+        return view('found.home',compact('founds'));
+    }
+
+    /**
+     * 搜索失物信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchLost(Request $request)
+    {
+        $losts = Lost::search($request->input('key'))->orderBy('created_at','desc')->paginate(15);
+
+        return view('lost.home',compact('losts'));
+    }
+
+    /**
+     * 搜索操场信息
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchPlayground(Request $request)
+    {
+        $posts = Post::search($request->input('key'))->orderBy('created_at','desc')->paginate(15);
+
+        return view('playground.home',compact('posts'));
+    }
 }

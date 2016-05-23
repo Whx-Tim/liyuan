@@ -12,12 +12,15 @@
                         <h4>万事屋</h4>
                     </div>
                     <div class="panel-body">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="请输入标题关键字">
-                            <div class="input-group-btn">
-                                <a href="#" class="btn btn-success"><i class="fa fa-search"></i></a>
+                        <form action="{{ url('partTime/search') }}" class="form-horizontal" method="post" role="form">
+                            {{ csrf_field() }}
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="key" placeholder="请输入标题关键字">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-success btn-radius"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         <table class="table table-hover">
                             <thead>
                             <th>发布时间</th>

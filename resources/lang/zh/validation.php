@@ -153,7 +153,11 @@ return [
         'date'                  => '日期',
         'time'                  => '时间',
         'available'             => '可用的',
-        'size'                  => '大小'
+        'size'                  => '大小',
+        'reward'                => '报酬',
+        'consignee'             => '收件人',
+        'company'               => '快递所属',
+        'consignee_address'     => '收件人地址',
     ],
 
 ];

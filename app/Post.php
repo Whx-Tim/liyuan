@@ -27,4 +27,15 @@ class Post extends Model
     public function replies(){
         return $this->hasMany(Replie::class);
     }
+
+    /**
+     * 操场的搜索功能
+     * 
+     * @param $key
+     * @return mixed
+     */
+    public static function search($key)
+    {
+        return static::where('title','like',"%{$key}%");
+    }
 }

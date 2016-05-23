@@ -25,4 +25,18 @@ class Transport extends Model
     public function transport_user(){
         return $this->hasOne(TransportUser::class);
     }
+
+    /**
+     * 快递帮取的搜索功能
+     * 
+     * @param $key
+     * @return mixed
+     */
+    public static function search($key)
+    {
+        return static::where('address','like',"%{$key}%")
+                        ->orwhere('time','like',"%{$key}%")
+                        ->orwhere('company','like',"%{$key}%")
+                        ->orwhere('reward','like',"%{$key}%");
+    }
 }

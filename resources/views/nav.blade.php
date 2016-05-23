@@ -45,7 +45,6 @@
                     <a href="#Lost" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">失物招领 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ url('found') }}">拾金不昧</a></li>
-                        <li><a href="#Find">查找宝贝</a></li>
                         <li><a href="{{ url('lost') }}">发布遗失宝贝信息</a></li>
                     </ul>
                 </li>

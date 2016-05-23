@@ -19,7 +19,11 @@
                             <button type="button" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</button>
                         @endif
                     </div></td></tr>
-            <tr><td class="actions-hover actions-fade"><a data-id="{{ $comment->id }}" href="javascript:;" onclick="DeleteComment($(this))"><i class="fa fa-trash-o"></i>仅发帖人和管理员可见</a></td></tr>
+            <tr><td class="actions-hover actions-fade">
+                    @if(Auth::check() && auth()->user()->isAdmin())
+                        <a data-id="{{ $comment->id }}" href="javascript:;" onclick="DeleteComment($(this))"><i class="fa fa-trash-o"></i>仅发帖人和管理员可见</a>
+                    @endif
+                </td></tr>
             </tbody>
         </table>
     </div>

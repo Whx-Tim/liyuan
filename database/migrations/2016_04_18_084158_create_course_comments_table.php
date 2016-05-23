@@ -14,11 +14,12 @@ class CreateCourseCommentsTable extends Migration
     {
         Schema::create('course_comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_number')->unique();
+            $table->integer('course_number');
             $table->string('name');
             $table->string('teacher');
             $table->string('time');
             $table->string('phone')->nullable();
+            $table->text('notice')->nullable();
             $table->integer('course_id');
             $table->integer('user_id');
             $table->boolean('accepted')->default(false);

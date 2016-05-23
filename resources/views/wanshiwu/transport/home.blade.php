@@ -11,11 +11,11 @@
                     <h4>万事屋</h4>
                 </div>
                 <div class="panel-body">
-                    <form action="#" method="post" class="form-horizontal" role="form">
+                    <form action="{{ url('transport/search') }}" method="post" class="form-horizontal" role="form">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="search" name="search" value="">
+                                <input type="text" class="form-control" id="key" name="key" placeholder="请输入关键字">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-success btn-radius"><i class="fa fa-search"></i></button>
                                 </div>

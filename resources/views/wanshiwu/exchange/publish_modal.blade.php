@@ -18,6 +18,7 @@
                                 <div class="help-block">
                                     <span>{{ $errors->first('name') }}</span>
                                 </div>
+
                             @endif
                         </div>
                     </div>

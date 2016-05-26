@@ -30,17 +30,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('owner/{user}','HomeController@showOwner');
     Route::get('modifyInfo','HomeController@showEditOwner');
     Route::get('bindingEmail','HomeController@showEmail');
-    
     Route::get('bindingPhone','HomeController@showPhone');
     Route::get('modifyPassword','HomeController@showPassword');
     Route::get('feedback','HomeController@showFeedback');
     Route::post('feedback','HomeController@saveFeedback');
     Route::post('bindingEmail/{user}','HomeController@bindingEmail');
+    Route::post('/sendEmail','HomeController@sendEmail');
     Route::patch('modifyPassword/{user}','HomeController@updatePassword');
     Route::patch('modifyInfo/{user}','HomeController@updateOwnerInfo');
     
 });
-
 Route::group(['middleware' => ['web']], function () {
     Route::get('wsw',function(){
         return view('wanshiwu.home');

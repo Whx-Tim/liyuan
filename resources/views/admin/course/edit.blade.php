@@ -91,6 +91,17 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-group{{ $errors->has('email') ? 'has-error' : '' }}">
+                        <label for="email" class="col-md-4 control-label">电子邮箱:</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="email" name="email" value="{{ $course->email }}">
+                            @if($errors->has('email'))
+                                <div class="help-block">
+                                    <span>{{ $errors->first('email') }}</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                     <hr>
                     <div class="col-md-4 col-md-offset-2">
                         <a href="{{ url('admin/course') }}" class="btn btn-danger btn-radius btn-block">返回</a>

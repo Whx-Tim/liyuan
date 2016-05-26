@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\CourseComment;
+use App\Events\UserBindingEmail;
 use App\Feedback;
 use App\Found;
 use App\Lost;
@@ -16,6 +17,7 @@ use App\User;
 use App\Transport;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -254,7 +256,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:10|max:10|integer',
+            'course_number' => 'required|min:9|max:10|integer',
             'time'          => 'required',
             'teacher'       => 'required',
             'email'         => 'required|email',
@@ -463,10 +465,10 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required',
+            'course_number' => 'required|min:9|max:10',
             'time'          => 'required',
             'teacher'       => 'required',
-            'phone'         => 'required',
+            'phone'         => 'required|regex:/^1[34578]\d{9}$/',
         ]);
 
         return CourseComment::create($request->except('_token')) ? redirect('exchange/detail/'.$request->input('course_id'))->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
@@ -507,7 +509,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:10|max:10',
+            'course_number' => 'required|min:9|max:10',
             'time'          => 'required',
             'teacher'       => 'required',
             'phone'         => 'required|regex:/^1[34578]\d{9}$/',
@@ -603,5 +605,34 @@ class HomeController extends Controller
         
         return $transport->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
     }
+
+    protected function createRandCodes($length = 6)
+    {
+        return mt_rand(pow(10,$length-1),pow(10,$length)-1);
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        Cache::put("{$user_id}codes",$this->createRandCodes(),10);
+
+        event(new UserBindingEmail($request->input('email'),$user_id));
+
+        return ['status' => 'success'];
+    }
     
+    public function bindingEmail(Request $request,User $user)
+    {
+        $this->validate($request,[
+            'emailVerified' => 'required'
+        ]);
+        if ($request->input('emailVerified') == Cache::get("{$user->id}codes")){
+            $user->emailVerified = true;
+            $user->email = $request->input('email');
+            $user->save();
+            return redirect('owner/'.$user->id)->with(['status' => 'success','message' => '绑定成功！']);
+        } else {
+            return redirect()->back()->with(['status' => 'error','message' => '绑定失败！验证码不匹配！']);
+        }
+    }
 }

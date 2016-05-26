@@ -13,6 +13,7 @@
     <link href="{{ url('css/bootstrap.min.css') }}" rel='stylesheet' type='text/css'>
     <link href="{{ url('css/style.css') }}" rel="stylesheet">
     <link href="//cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -42,6 +43,7 @@
 <script type="text/javascript" src="{{ url('js/jquery.knob.min.js') }}"></script>
 <script src="//cdn.bootcss.com/select2/4.0.2-rc.1/js/select2.min.js"></script>
 <script src="//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="//cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script type="text/javascript" src="{{ url('js/main.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
@@ -72,6 +74,9 @@
     @if(session()->has('status'))
         toastr['{{ session('status') == 'error' ? 'error' : 'success' }}']('{{ session('message') }}');
     @endif
+
+
 </script>
+@yield('js')
 </body>
 </html>

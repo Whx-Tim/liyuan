@@ -10,10 +10,11 @@
             </div>
             <div class="panel-body">
                 <form action="{{ url('bindingEmail/'.Auth::user()->id) }}" method="post" class="form-horizontal" role="form">
+                    {{ csrf_field() }}
                     <div class="form-group{{ $errors->has('email') ? 'has-error' : '' }}">
                         <label for="email" class="col-md-3 control-label">电子邮箱:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}">
+                            <input type="text" class="form-control" id="email" name="sendEmail" value="{{ Auth::user()->email }}">
                             @if($errors->has('email'))
                                 <div class="help-block">
                                     <span>{{ $errors->first('email') }}</span>
@@ -32,7 +33,7 @@
                                     </div>
                                 @endif
                                 <span class="input-group-btn">
-                                    <a href="#" class="btn btn-primary btn-radius">发送验证码</a>
+                                    <a href="javascript:;" id="sendEmail" class="btn btn-primary btn-radius" role="button">发送验证码</a>
                                 </span>
                             </div>
                         </div>
@@ -43,4 +44,47 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    <script type="text/javascript">
+        var num = 10;
+        var stop;
+        $(document).ready(function () {
+            $("#sendEmail").click(function (ev){
+                ev.preventDefault();
+                function clock(){
+                    num--;
+                    if(num){
+                        document.getElementById('sendEmail').className = 'btn btn-primary btn-radius disabled';
+                        document.getElementById('sendEmail').innerHTML = num+"秒后重新发送";
+                        stop = setTimeout(clock,1000);
+                    } else {
+                        clearTimeout(stop);
+                        document.getElementById('sendEmail').className = 'btn btn-primary btn-radius';
+                        document.getElementById('sendEmail').innerHTML = "发送验证码";
+                        num = 10;
+                    }
+                }
+                clock();
+                $.ajax({
+                    url: 'sendEmail',
+                    type: 'POST',
+                    data: {
+                    _token: '{{ csrf_token() }}',
+                    user_id: '{{ Auth::user()->id }}',
+                    email: $('input[name=sendEmail]').val()
+                },
+                success: function (data) {
+                    if(data.status == 'success'){
+                        swal('发送成功！','请查看邮箱中的验证码','success');
+                    }
+                },
+                error: function(){
+                    swal('发送失败！','请重试！','warning');
+                }
+                });
+
+            })
+        })
+    </script>
 @endsection

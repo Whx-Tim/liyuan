@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 465),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,8 +55,8 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
-
+    'from' => ['address' => env('MAIL_USERNAME'), 'name' => 'Tim'],
+    
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol

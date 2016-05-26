@@ -62,3 +62,11 @@
 @endsection
 
 @include('delete',['url' => 'sell'])
+
+@section('js')
+    <script type="text/javascript">
+        @if(count($errors)>0)
+                toastr['error']('发布失败！请重试！');
+        @endif
+    </script>
+@endsection

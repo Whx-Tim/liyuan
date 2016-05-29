@@ -44,6 +44,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="home-pagination">
+                            {!! $courses->render() !!}
+                        </div>
                         @if(Auth::check())
                             @include('wanshiwu.exchange.publish_modal')
                         @else

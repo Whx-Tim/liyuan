@@ -26,6 +26,12 @@ class Course extends Model
         return $this->hasMany(CourseComment::class);
     }
 
+    /**
+     * 课程交换的搜索功能
+     * 
+     * @param $key
+     * @return mixed
+     */
     public static function search($key)
     {
         return static::where('name','like',"%{$key}%")
@@ -34,5 +40,16 @@ class Course extends Model
                         ->orwhere('teacher','like',"%{$key}%")
                         ->orwhere('want_name','like',"%{$key}%")
                         ->orwhere('want_teacher','like',"%{$key}%");
+    }
+
+    /**
+     * 课程交换最新的5条记录
+     * 
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeNewest($query)
+    {
+        return $query->orderBy('created_at','desc')->take(5);
     }
 }

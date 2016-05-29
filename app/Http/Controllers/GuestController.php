@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Found;
+use App\Information;
 use App\Lost;
 use App\PartTime;
 use App\Post;
 use App\Sell;
 use App\Transport;
+use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
@@ -17,11 +19,33 @@ use Illuminate\Support\Facades\DB;
 
 class GuestController extends Controller
 {
+    
+    public function index()
+    {
+        $info_1    = Information::where('type',1)->get();
+        $info_2    = Information::where('type',2)->get();
+        $info_3    = Information::where('type',3)->get();
+        $info_4    = Information::where('type',4)->get();
+        $info_5    = Information::where('type',5)->get();
+        $partTimes = PartTime::Newest()->get();
+        $courses   = Course::Newest()->get();
+        $sells     = Sell::Newest()->get();
+        $founds    = Found::Newest()->get();
+        $losts     = Lost::Newest()->get();
+        $posts     = Post::Newest()->get();
+        
+        return view('home',compact('info_1','info_2','info_3','info_4','info_5','partTimes','courses','sells','founds','losts','posts'));
+    }
     //
+    /**
+     * 显示二手交易页面
+     * 
+     * @return mixed
+     */
     public function sellHome(){
         $sells = DB::table('sells')->join('users','users.id','=','sells.user_id')
             ->select('users.username','sells.*')
-            ->paginate(3);
+            ->paginate(15);
 
         return view('wanshiwu.second_hand',compact('sells'));
     }
@@ -44,7 +68,7 @@ class GuestController extends Controller
      * @return mixed
      */
     public function showCourseHome(){
-        $courses = Course::all();
+        $courses = Course::paginate(15);
         return view('wanshiwu.exchange.home',compact('courses'));
 
     }
@@ -244,5 +268,25 @@ class GuestController extends Controller
         $posts = Post::search($request->input('key'))->orderBy('created_at','desc')->paginate(15);
 
         return view('playground.home',compact('posts'));
+    }
+
+    public function showWeather()
+    {
+        //http://abletive.com/api/get_posts/?page=1&count=2
+//        $ch = curl_init("http://wthrcdn.etouch.cn/weather_mini?city=深圳");
+//        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//
+//        $json = json_decode(curl_exec($ch));
+//
+//        dd($json);
+//
+//        curl_close($ch);
+//        foreach ($json->data->forecast as $forecast){
+//            echo $forecast->fengxiang;
+//        }
+        $client = new Client;
+        $json = json_decode($client->get("http://wthrcdn.etouch.cn/weather_mini?city=深圳")->getBody()->getContents());
+        dd($json);
     }
 }

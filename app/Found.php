@@ -33,4 +33,15 @@ class Found extends Model
                         ->orwhere('address','like',"%{$key}%")
                         ->orwhere('location','like',"%{$key}%");
     }
+
+    /**
+     * 失物信息的最新5条记录
+     * 
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeNewest($query)
+    {
+        return $query->orderBy('created_at','desc')->take(5);
+    }
 }

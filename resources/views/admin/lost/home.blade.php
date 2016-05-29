@@ -35,5 +35,8 @@
             @endforeach
             </tbody>
         </table>
+        <div class="home-pagination">
+            {!! $losts->render() !!}
+        </div>
     </div>
 @endsection

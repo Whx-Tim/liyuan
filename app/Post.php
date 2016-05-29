@@ -38,4 +38,16 @@ class Post extends Model
     {
         return static::where('title','like',"%{$key}%");
     }
+
+    /**
+     * 操场的最新5条记录
+     *
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeNewest($query)
+    {
+        return $query->orderBy('created_at','desc')->take(5);
+    }
+
 }

@@ -120,4 +120,11 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
         'user_id' => 1 
     ];
 });
+$factory->define(App\Information::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->sentence,
+        'content' => $faker->paragraph,
+        'type' => mt_rand(1,5),
+    ];
+});
 

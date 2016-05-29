@@ -23,4 +23,15 @@ class PartTime extends Model
     {
         return static::where('title','like',"%{$key}%");
     }
+
+    /**
+     * 兼职信息的最新5条信息
+     *
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeNewest($query)
+    {
+        return $query->orderBy('created_at','desc')->take(5);
+    }
 }

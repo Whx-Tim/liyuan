@@ -48,7 +48,7 @@ class AdminController extends Controller
      */
     public function showUser()
     {
-        $users = User::all();
+        $users = User::paginate(15);
 
         return view('admin.user.home',compact('users'));
     }
@@ -106,7 +106,7 @@ class AdminController extends Controller
      */
     public function showCourse()
     {
-        $courses = Course::all();
+        $courses = Course::paginate(15);
         
         return view('admin.course.home',compact('courses'));
     }
@@ -144,10 +144,10 @@ class AdminController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required',
+            'course_number' => 'required|min:10|max:11',
             'time'          => 'required',
             'teacher'       => 'required',
-            'phone'         => 'required',
+            'phone'         => 'required|regex:/^1[34578]\d{9}$/',
         ]);
         
         return $course->update($request->except('_token')) ? redirect()->back()->with(['status' => 'success','message' => '修改成功!']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
@@ -176,7 +176,7 @@ class AdminController extends Controller
      */
     public function showSell()
     {
-        $sells = Sell::all();
+        $sells = Sell::paginate(15);
 
         return view('admin.sell.home',compact('sells'));
     }
@@ -217,7 +217,7 @@ class AdminController extends Controller
             'title' => 'required',
             'name'  => 'required',
             'price' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
         ]);
 
         if($request->file('img')){
@@ -251,7 +251,7 @@ class AdminController extends Controller
      */
     public function showPartTime()
     {
-        $partTimes = PartTime::all();
+        $partTimes = PartTime::paginate(15);
         
         return view('admin.partTime.home',compact('partTimes'));
     }
@@ -292,8 +292,8 @@ class AdminController extends Controller
             'address' => 'required',
             'salary'  => 'required',
             'time'    => 'required',
-            'phone'   => 'required',
-            'email'   => 'required'
+            'phone'   => 'required|regex:/^1[34578]\d{9}$/',
+            'email'   => 'required|email'
         ]);
 
         return $partTime->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功']) : redirect()->back()->with(['status' => 'error','message' => '修改失败']);
@@ -318,7 +318,7 @@ class AdminController extends Controller
      */
     public function showTransport()
     {
-        $transports = Transport::all();
+        $transports = Transport::paginate(15);
         
         return view('admin.transport.home',compact('transports'));
     }
@@ -357,10 +357,10 @@ class AdminController extends Controller
         $this->validate($request,[
             'address'          => 'required',
             'time'             => 'required',
-            'reward'           => 'required',
+            'reward'           => 'required|integer',
             'company'          => 'required',
             'consignee'        => 'required',
-            'phone'            => 'required',
+            'phone'            => 'required|regex:/^1[34578]\d{9}$/',
             'ConsigneeAddress' => 'required',
         ]);
 
@@ -386,7 +386,7 @@ class AdminController extends Controller
      */
     public function showPlayground()
     {
-        $playgrounds = Post::all();
+        $playgrounds = Post::paginate(15);
 
         return view('admin.playground.home',compact('playgrounds'));
     }
@@ -425,7 +425,7 @@ class AdminController extends Controller
      */
     public function showFound()
     {
-        $founds = Found::all();
+        $founds = Found::paginate(15);
 
         return view('admin.found.home',compact('founds'));
     }
@@ -466,7 +466,7 @@ class AdminController extends Controller
             'name'    => 'required',
             'type'    => 'required',
             'address' => 'required',
-            'phone'   => 'required'
+            'phone'   => 'required|regex:/^1[34578]\d{9}$/'
         ]);
         if ($request->file('img')){
             $img = $this->moveFile($request);
@@ -498,7 +498,7 @@ class AdminController extends Controller
      */
     public function showLost()
     {
-        $losts = Lost::all();
+        $losts = Lost::paginate(15);
 
         return view('admin.lost.home',compact('losts'));
     }
@@ -538,7 +538,7 @@ class AdminController extends Controller
             'info'    => 'required',
             'type'    => 'required',
             'address' => 'required',
-            'phone'   => 'required'
+            'phone'   => 'required|regex:/^1[34578]\d{9}$/'
         ]);
 
         return $lost->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
@@ -564,7 +564,7 @@ class AdminController extends Controller
      */
     public function showFeedback()
     {
-        $feedbacks = Feedback::all();
+        $feedbacks = Feedback::paginate(15);
 
         return view('admin.feedback.home',compact('feedbacks'));
     }

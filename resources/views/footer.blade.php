@@ -1,3 +1,5 @@
 <footer class="footer">
-    <p>Lite <i class="fa fa-coffee"></i> Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a> - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></p>
+    <small>本网站由 2013级岗位实践 掌上荔园小组设计开发</small><br>
+    <small>本网站的开发人员：Tim Wang</small><br>
+    <small>本网站的测试人员：李淑銮、陈满盛</small>
 </footer>

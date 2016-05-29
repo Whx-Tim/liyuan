@@ -80,7 +80,7 @@
                     }
                 },
                 error: function(){
-                    swal('发送失败！','请重试！','warning');
+                        swal('发送失败！','该邮箱已被其他用户绑定！','warning');
                 }
                 });
 

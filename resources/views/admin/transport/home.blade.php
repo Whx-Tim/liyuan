@@ -45,5 +45,8 @@
             @endforeach
             </tbody>
         </table>
+        <div class="home-pagination">
+            {!! $transports->render() !!}
+        </div>
     </div>
 @endsection

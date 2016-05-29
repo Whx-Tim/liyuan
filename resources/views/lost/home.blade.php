@@ -43,6 +43,9 @@
                     @endforeach    
                     </tbody>
                 </table>
+                <div class="home-pagination">
+                    {!! $losts->render() !!}
+                </div>
                 <hr>
                 <a href="{{ url('lost/publish') }}" class="btn btn-primary btn-block btn-radius">发布失物信息</a>
             </div>

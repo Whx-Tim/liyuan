@@ -43,7 +43,7 @@
                                             @if(!$course->condition)
                                             <button type="button" class="btn btn-radius btn-success"><i class="fa fa-smile-o"></i>未换</button>
                                             @else
-                                            <button type="button" class="btn btn-radius btn-danger"><i class="fa fa-sad-o"></i>已换</button>
+                                            <button type="button" class="btn btn-radius btn-danger"><i class="fa fa-exclamation"></i>已换</button>
                                             @endif
                                     </div>
                                 </td></tr>

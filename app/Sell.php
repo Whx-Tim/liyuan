@@ -17,8 +17,25 @@ class Sell extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * 二手交易的搜索功能
+     * 
+     * @param $key
+     * @return mixed
+     */
     public static function search($key)
     {
         return static::where('title','like',"%{$key}%");
+    }
+
+    /**
+     * 二手交易的最新5条记录
+     * 
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeNewest($query)
+    {
+        return $query->orderBy('created_at','desc')->take(5);
     }
 }

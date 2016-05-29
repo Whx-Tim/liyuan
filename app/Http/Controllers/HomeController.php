@@ -126,13 +126,7 @@ class HomeController extends Controller
             return redirect()->back()->with(['status' => 'error','message' => '修改失败']);
         }
     }
-    
-    public function updateOwnerInfo(Request $request,User $user)
-    {
-        $this->validate($request,[
 
-        ]);
-    }
     /**
      * 显示意见反馈页面
      * 
@@ -165,7 +159,7 @@ class HomeController extends Controller
             'name' => 'required',
             'type' => 'required',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|regex:/^1[34578]\d{9}$/',
         ]);
         if ($request->file('img')){
             $img = $this->moveFile($request);
@@ -256,7 +250,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:9|max:10|integer',
+            'course_number' => 'required|min:10|max:11|integer',
             'time'          => 'required',
             'teacher'       => 'required',
             'email'         => 'required|email',
@@ -465,7 +459,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:9|max:10',
+            'course_number' => 'required|min:10|max:11',
             'time'          => 'required',
             'teacher'       => 'required',
             'phone'         => 'required|regex:/^1[34578]\d{9}$/',
@@ -509,7 +503,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:9|max:10',
+            'course_number' => 'required|min:10|max:11',
             'time'          => 'required',
             'teacher'       => 'required',
             'phone'         => 'required|regex:/^1[34578]\d{9}$/',
@@ -613,6 +607,10 @@ class HomeController extends Controller
 
     public function sendEmail(Request $request)
     {
+        $this->validate($request,[
+            'email' => 'required|unique:users'
+        ]);
+
         $user_id = $request->input('user_id');
         Cache::put("{$user_id}codes",$this->createRandCodes(),10);
 
@@ -628,11 +626,27 @@ class HomeController extends Controller
         ]);
         if ($request->input('emailVerified') == Cache::get("{$user->id}codes")){
             $user->emailVerified = true;
-            $user->email = $request->input('email');
+            $user->email = $request->input('sendEmail');
             $user->save();
             return redirect('owner/'.$user->id)->with(['status' => 'success','message' => '绑定成功！']);
         } else {
             return redirect()->back()->with(['status' => 'error','message' => '绑定失败！验证码不匹配！']);
         }
+    }
+
+    public function updateOwnerInfo(Request $request,User $user)
+    {
+        $this->validate($request,[
+            'stuNumber' => 'min:10|max:11',
+        ]);
+
+        return $user->update($request->except(['_token','_method'])) ? redirect('owner/'.$user->id)->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
+    }
+
+    public function exchangeSellCondition(Sell $sell)
+    {
+        $sell->condition = $sell->condition ? false : true ;
+        $sell->save();
+        return ['status' => 'success'];
     }
 }

@@ -26,7 +26,6 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
     Route::get('owner/{user}','HomeController@showOwner');
     Route::get('modifyInfo','HomeController@showEditOwner');
     Route::get('bindingEmail','HomeController@showEmail');
@@ -44,14 +43,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('wsw',function(){
         return view('wanshiwu.home');
     });
-    Route::get('/',function(){
-        return view('welcome');
-    });
-
+    Route::get('/home', 'GuestController@index');
+    Route::get('/','GuestController@index');
+    Route::get('weather','GuestController@showWeather');
     Route::group(['prefix' => 'sell'], function () {
         Route::get('','GuestController@sellHome');
         Route::get('detail/{sell}','GuestController@showSellDetail');
         Route::get('edit/{sell}','HomeController@showSellEdit');
+        Route::get('exchangeCondition/{sell}','HomeController@exchangeSellCondition');
         Route::post('','HomeController@addSell');
         Route::post('search','GuestController@searchSell');
         Route::patch('/{sell}','HomeController@editSell');

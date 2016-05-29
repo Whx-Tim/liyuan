@@ -32,5 +32,8 @@
             @endforeach
             </tbody>
         </table>
+        <div class="home-pagination">
+            {!! $feedbacks->render() !!}
+        </div>
     </div>
 @endsection

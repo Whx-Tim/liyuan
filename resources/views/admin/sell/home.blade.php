@@ -42,6 +42,9 @@
                 @endforeach
                 </tbody>
             </table>
+            <div class="home-pagination">
+                {!! $sells->render() !!}
+            </div>
         </div>
     </div>
 @endsection

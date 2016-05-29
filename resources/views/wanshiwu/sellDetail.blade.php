@@ -31,7 +31,14 @@
                             <li class="list-group-item"><span>发帖人：</span> {{ $sell->user->username }}</li>
                             <li class="list-group-item"><span>发帖时间：</span>{{ $sell->created_at }}</li>
                             <li class="list-group-item"><span>更新时间：</span>{{ $sell->updated_at }}</li>
-                            <li class="list-group-item"><span>未完成/已完成：</span></li>
+                            <li class="list-group-item">
+                                <span>未完成/已完成：</span>
+                                @if(!$sell->condition)
+                                    <button data-id="{{ $sell->id }}" id="sell-condition" class="btn btn-danger btn-radius"><i class="fa fa-exclamation"></i>未完成</button>
+                                @else
+                                    <button data-id="{{ $sell->id }}" id="sell-condition" class="btn btn-success btn-radius"><i class="fa fa-check"></i>已完成</button>
+                                @endif
+                            </li>
                             <li class="list-group-item"><span>物品介绍：</span>{{ $sell->content }}</li>
                             <li class="list-group-item"><span>图片：</span><img src="{{ $sell->img }}" alt="物品图片" class="img-thumbnail"></li>
                             <li class="list-group-item">
@@ -51,3 +58,36 @@
 @endsection
 
 @include('deleteDetail',['url' => 'sell'])
+
+@section('js')
+    <script type="text/javascript">
+        $("#sell-condition").click(function () {
+            var id = $("#sell-condition").attr('data-id')
+            swal({
+                title: "确定更改状态？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "不好意思，点错了",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定更改",
+                closeOnConfirm: false
+            },function () {
+                $.ajax({
+                    url: '/sell/exchangeCondition/' + id,
+                    type: 'GET',
+                    success: function (data) {
+                        if (data.status == 'success'){
+                            swal('更改成功！','','success')
+                            window.location.href = id;
+                        } else {
+                            swal('更改失败！','','error');
+                        }
+                    },
+                    error: function () {
+                        swal('更改失败！','','error');
+                    }
+                });
+            });
+        })
+    </script>
+@endsection

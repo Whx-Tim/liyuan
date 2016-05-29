@@ -43,5 +43,8 @@
             @endforeach
             </tbody>
         </table>
+        <div class="home-pagination">
+            {!! $courses->render() !!}
+        </div>
     </div>
 @endsection

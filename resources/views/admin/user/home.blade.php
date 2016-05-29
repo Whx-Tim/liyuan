@@ -32,6 +32,9 @@
             @endforeach
             </tbody>
         </table>
+        <div class="home-pagination">
+            {!! $users->render() !!}
+        </div>
     </div>
 @endsection
 

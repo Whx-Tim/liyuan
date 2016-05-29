@@ -40,7 +40,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ url('playground') }}">操场</a></li>
-                <li><a href="#Weather">天气预报</a></li>
+                <li><a href="{{ url('weather') }}">天气预报</a></li>
                 <li class="dropdown">
                     <a href="#Lost" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">失物招领 <span class="caret"></span></a>
                     <ul class="dropdown-menu">

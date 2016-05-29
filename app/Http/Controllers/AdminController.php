@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Feedback;
 use App\Found;
+use App\Information;
 use App\Lost;
 use App\PartTime;
 use App\Post;
@@ -591,4 +592,54 @@ class AdminController extends Controller
     {
         return $feedback->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
     }
+    
+    public function showInfo()
+    {
+        $info_1    = Information::where('type','学子天地')->orderBy('created_at','desc')->paginate(10);
+        $info_2    = Information::where('type','校园生活')->orderBy('created_at','desc')->paginate(10);
+        $info_3    = Information::where('type','行政通知')->orderBy('created_at','desc')->paginate(10);
+        $info_4    = Information::where('type','周边信息')->orderBy('created_at','desc')->paginate(10);
+        $info_5    = Information::where('type','重要通知')->orderBy('created_at','desc')->paginate(10);
+        
+        return view('admin.info.home',compact('info_1','info_2','info_3','info_4','info_5'));
+    }
+    
+    public function showEditInfo(Information $information)
+    {
+        return view('admin.info.edit',compact('information'));
+    }
+    
+    public function showInfoDetail(Information $information)
+    {
+        return view('admin.info.detail',compact('information'));
+    }
+
+    public function addInfo(Request $request)
+    {
+        $this->validate($request,[
+            'title'   => 'required',
+            'content' => 'required',
+            'type'    => 'required'
+        ]);
+
+        return Information::create($request->except('_token')) ? redirect()->back()->with(['status' => 'success','message' => '发布成功！']) : redirect()->back()->with(['status' => 'error','message' => '发布失败！']);
+    }
+
+    public function editInfo(Request $request,Information $information)
+    {
+        $this->validate($request,[
+            'title'   => 'required',
+            'content' => 'required',
+            'type'    => 'required'
+        ]);
+
+        return $information->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
+    }
+
+    public function deleteInfo(Information $information)
+    {
+        return $information->delete() ? redirect()->back()->with(['status' => 'success','message' => '删除成功！']) : redirect()->back()->with(['status' => 'error','message' => '删除失败！']);
+    }
+
+    
 }

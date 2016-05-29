@@ -124,7 +124,7 @@ $factory->define(App\Information::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->sentence,
         'content' => $faker->paragraph,
-        'type' => mt_rand(1,5),
+        'type' => '重要通知',
     ];
 });
 

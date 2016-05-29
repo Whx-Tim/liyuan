@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Replie extends Model
 {
+    protected $guarded = [];
 
     /**
      * 一个replie对应一个post

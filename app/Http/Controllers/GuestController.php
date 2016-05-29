@@ -22,11 +22,11 @@ class GuestController extends Controller
     
     public function index()
     {
-        $info_1    = Information::where('type',1)->get();
-        $info_2    = Information::where('type',2)->get();
-        $info_3    = Information::where('type',3)->get();
-        $info_4    = Information::where('type',4)->get();
-        $info_5    = Information::where('type',5)->get();
+        $info_1    = Information::where('type','学子天地')->orderBy('created_at','desc')->paginate(10);
+        $info_2    = Information::where('type','校园生活')->orderBy('created_at','desc')->paginate(10);
+        $info_3    = Information::where('type','行政通知')->orderBy('created_at','desc')->paginate(10);
+        $info_4    = Information::where('type','周边信息')->orderBy('created_at','desc')->paginate(10);
+        $info_5    = Information::where('type','重要通知')->orderBy('created_at','desc')->paginate(10);
         $partTimes = PartTime::Newest()->get();
         $courses   = Course::Newest()->get();
         $sells     = Sell::Newest()->get();
@@ -287,6 +287,32 @@ class GuestController extends Controller
 //        }
         $client = new Client;
         $json = json_decode($client->get("http://wthrcdn.etouch.cn/weather_mini?city=深圳")->getBody()->getContents());
-        dd($json);
+        $wendu = $json->data->wendu;
+        $ganmao = $json->data->ganmao;
+        for ($i=0;$i<5;$i++){
+            switch ($json->data->forecast[$i]->type){
+                case "多云":
+                    $images[$i] = 'duoyun';
+                    break;
+                case "阵雨":
+                    $images[$i] = 'zhenyu';
+                    break;
+                case "小雨":
+                    $images[$i] = 'xiaoyu';
+                    break;
+                case "中雨":
+                    $images[$i] = 'zhongyu';
+            }
+        }
+        $forecasts = $json->data->forecast;
+        return view('weather',compact('wendu','ganmao','forecasts','images'));
+    }
+
+    public function showInformation(Information $information)
+    {
+        $information->count++;
+        $information->save();
+
+        return view('info-detail',compact('information'));
     }
 }

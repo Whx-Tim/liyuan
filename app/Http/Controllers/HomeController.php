@@ -11,6 +11,7 @@ use App\Found;
 use App\Lost;
 use App\PartTime;
 use App\Post;
+use App\Replie;
 use App\Sell;
 use App\TransportUser;
 use App\User;
@@ -420,7 +421,7 @@ class HomeController extends Controller
             'consigneeAddress' => 'required',
         ]);
         
-        return Transport::create($request->except('_token')) ? redirect('transport')->with(['status' => 'success','message' => '发布成功']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
+        return Transport::create($request->except('_token')) ? redirect('transport')->with(['status' => 'success','message' => '发布成功!请在个人主页处查看自己发布的信息']) : redirect()->back()->with(['status' => 'error','message' => '发布失败']);
     }
 
     /**
@@ -600,11 +601,23 @@ class HomeController extends Controller
         return $transport->update($request->except(['_token','_method'])) ? redirect()->back()->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
     }
 
+    /**
+     * 创建随机指定长度的数字，默认为6
+     *
+     * @param int $length
+     * @return mixed
+     */
     protected function createRandCodes($length = 6)
     {
         return mt_rand(pow(10,$length-1),pow(10,$length)-1);
     }
 
+    /**
+     * 发送邮箱验证码
+     *
+     * @param Request $request
+     * @return array
+     */
     public function sendEmail(Request $request)
     {
         $this->validate($request,[
@@ -618,7 +631,14 @@ class HomeController extends Controller
 
         return ['status' => 'success'];
     }
-    
+
+    /**
+     * 绑定邮箱
+     *
+     * @param Request $request
+     * @param User $user
+     * @return mixed
+     */
     public function bindingEmail(Request $request,User $user)
     {
         $this->validate($request,[
@@ -634,6 +654,13 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * 修改个人信息
+     *
+     * @param Request $request
+     * @param User $user
+     * @return mixed
+     */
     public function updateOwnerInfo(Request $request,User $user)
     {
         $this->validate($request,[
@@ -643,10 +670,25 @@ class HomeController extends Controller
         return $user->update($request->except(['_token','_method'])) ? redirect('owner/'.$user->id)->with(['status' => 'success','message' => '修改成功！']) : redirect()->back()->with(['status' => 'error','message' => '修改失败！']);
     }
 
+    /**
+     * 更改二手交易的状态信息
+     *
+     * @param Sell $sell
+     * @return array
+     */
     public function exchangeSellCondition(Sell $sell)
     {
         $sell->condition = $sell->condition ? false : true ;
         $sell->save();
         return ['status' => 'success'];
+    }
+    
+    public function addComment(Request $request)
+    {
+        $this->validate($request,[
+            'content' => 'required'
+        ]);
+        
+        return Replie::create($request->except('_token')) ? redirect()->back()->with(['status' => 'success','message' => '发布成功！']) : redirect()->back()->with(['status' => 'error','message' => '发布失败！']);
     }
 }

@@ -47,6 +47,12 @@
             <i class="fa fa-chevron-right"></i>
         </a>
     </li>
+    <li{{ request()->is('admin/info*') ? ' class=active ' : ''}}>
+        <a href="{{ url('admin/info') }}">
+            公告信息
+            <i class="fa fa-chevron-right"></i>
+        </a>
+    </li>
     <li{{ request()->is('admin/feedback*') ? ' class=active ' : '' }}>
         <a href="{{ url('admin/feedback') }}">
             意见反馈

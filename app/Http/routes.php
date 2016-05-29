@@ -45,6 +45,7 @@ Route::group(['middleware' => ['web']], function () {
     });
     Route::get('/home', 'GuestController@index');
     Route::get('/','GuestController@index');
+    Route::get('info/detail/{information}','GuestController@showInformation');
     Route::get('weather','GuestController@showWeather');
     Route::group(['prefix' => 'sell'], function () {
         Route::get('','GuestController@sellHome');
@@ -108,6 +109,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('detail/{post}','GuestController@showPlaygroundDetail');
         Route::post('','HomeController@createPlayground');
         Route::post('search','GuestController@searchPlayground');
+        Route::post('comment','HomeController@addComment');
     });
     
 });
@@ -170,6 +172,15 @@ Route::group(['prefix' => 'admin','middleware' => ['web','auth','role:admin']], 
         Route::get('','AdminController@showFeedback');
         Route::get('detail/{feedback}','AdminController@showFeedbackDetail');
         Route::delete('/{feedback}','AdminController@deleteFeedback');
+    });
+    Route::group(['prefix' => 'info'], function (){
+        Route::get('','AdminController@showInfo');
+        Route::get('edit/{information}','AdminController@showEditInfo');
+        Route::get('detail/{information}','AdminController@showInfoDetail');
+        Route::get('add','AdminController@showAddInfo');
+        Route::post('add','AdminController@addInfo');
+        Route::patch('edit/{information}','AdminController@editInfo');
+        Route::delete('/{information}','AdminController@deleteInfo');
     });
 });
 

@@ -16,8 +16,9 @@ class CreateInformationTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
-            $table->integer('type');
+            $table->string('type');
             $table->string('link');
+            $table->integer('count')->default(0);
             $table->timestamps();
         });
     }

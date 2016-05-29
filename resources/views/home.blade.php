@@ -18,42 +18,60 @@
                     <div id="tab1" class="tab-pane">
                         <ul>
                             @foreach($info_1 as $info)
-                                <li>{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></li>
+                                <li><a href="{{ url('info/detail/'.$info->id) }}">{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></a></li>
                             @endforeach
+                            <div class="home-pagination">
+                                {!! $info_1->render() !!}
+                            </div>
                         </ul>
                     </div>
                     <div id="tab2" class="tab-pane">
                         <ul>
                             @foreach($info_2 as $info)
-                                <li>{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></li>
+                                <li><a href="{{ url('info/detail/'.$info->id) }}">{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></a></li>
                             @endforeach
+                            <div class="home-pagination">
+                                {!! $info_2->render() !!}
+                            </div>
                         </ul>
                     </div>
                     <div id="tab3" class="tab-pane">
                         <ul>
                             @foreach($info_3 as $info)
-                                <li>{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></li>
+                                <li><a href="{{ url('info/detail/'.$info->id) }}">{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></a></li>
                             @endforeach
+                            <div class="home-pagination">
+                                {!! $info_3->render() !!}
+                            </div>
                         </ul>
                     </div>
                     <div id="tab4" class="tab-pane">
                         <ul>
                             @foreach($info_4 as $info)
-                                <li>{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></li>
+                                <li><a href="{{ url('info/detail/'.$info->id) }}">{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></a></li>
                             @endforeach
+                            <div class="home-pagination">
+                                {!! $info_4->render() !!}
+                            </div>
                         </ul>
                     </div>
                     <div id="tab5" class="tab-pane active">
                         <ul>
                             @foreach($info_5 as $info)
-                                <li>{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></li>
+                                <li><a href="{{ url('info/detail/'.$info->id) }}">{{ $info->title }}<small class="pull-right">{{ $info->created_at }}</small></a></li>
                             @endforeach
+                            <div class="home-pagination">
+                                {!! $info_5->render() !!}
+                            </div>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <br>
+
+    </div>
+    <div class="col-md-10 col-md-offset-1">
         <div class="col-md-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
@@ -101,7 +119,7 @@
                     <ul>
                         @foreach($founds as $found)
                             <li><a href="{{ url('found/detail/'.$found->id) }}">{{ $found->name }}</a></li>
-                        @endforeach    
+                        @endforeach
                     </ul>
                 </div>
             </div>

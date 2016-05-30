@@ -110,6 +110,10 @@ return [
         'email'    => [
             'required' => '电子邮箱必填',
         ],
+        'course_number' => [
+            'min' => '课程号必须为10位',
+            'max' => '课程号必须为10位',
+        ]
     ],
 
     /*
@@ -158,6 +162,7 @@ return [
         'consignee'             => '收件人',
         'company'               => '快递所属',
         'consignee_address'     => '收件人地址',
+        'course_number'         => '课程号'
     ],
 
 ];

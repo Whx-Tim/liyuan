@@ -251,7 +251,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:10|max:11|integer',
+            'course_number' => 'required|min:1000000000|max:10000000000|integer',
             'time'          => 'required',
             'teacher'       => 'required',
             'email'         => 'required|email',
@@ -460,7 +460,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:10|max:11',
+            'course_number' => 'required|min:1000000000|max:10000000000',
             'time'          => 'required',
             'teacher'       => 'required',
             'phone'         => 'required|regex:/^1[34578]\d{9}$/',
@@ -504,7 +504,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:10|max:11',
+            'course_number' => 'required|min:1000000000|max:10000000000',
             'time'          => 'required',
             'teacher'       => 'required',
             'phone'         => 'required|regex:/^1[34578]\d{9}$/',

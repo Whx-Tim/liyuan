@@ -302,6 +302,14 @@ class GuestController extends Controller
                     break;
                 case "中雨":
                     $images[$i] = 'zhongyu';
+                    break;
+                case "雷阵雨":
+                    $images[$i] = '15';
+                    break;
+                case "晴":
+                default:
+                    $images[$i] = '2';
+                    break;
             }
         }
         $forecasts = $json->data->forecast;

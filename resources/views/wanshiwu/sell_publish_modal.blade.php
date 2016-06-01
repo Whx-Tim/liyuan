@@ -67,7 +67,7 @@
                     <div class="form-group{{ $errors->has('content') ? 'has-error' : '' }}">
                         <label for="content" class="col-md-4 control-label">物品介绍:</label>
                         <div class="col-md-6">
-                            <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="请输入物品的详细介绍strong*">{{ old('content') }}</textarea>
+                            <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="请输入物品的详细介绍">{{ old('content') }}</textarea>
                             @if($errors->has('content'))
                                 <div class="help-block">
                                     <span>{{ $errors->first('content') }}</span>

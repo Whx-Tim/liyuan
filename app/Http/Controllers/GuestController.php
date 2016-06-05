@@ -43,9 +43,7 @@ class GuestController extends Controller
      * @return mixed
      */
     public function sellHome(){
-        $sells = DB::table('sells')->join('users','users.id','=','sells.user_id')
-            ->select('users.username','sells.*')
-            ->paginate(15);
+        $sells = Sell::paginate(15);
 
         return view('wanshiwu.second_hand',compact('sells'));
     }

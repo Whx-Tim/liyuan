@@ -35,7 +35,7 @@
                             @foreach($sells as $sell)
                                 <tr>
                                     <td>{{ $sell->created_at }}</td>
-                                    <td><a href="{{ url('sell/detail/'.$sell->id) }}">{{ $sell->name }}</a></td>
+                                    <td><a href="{{ url('sell/detail/'.$sell->id) }}">{{ $sell->title }}</a></td>
                                     <td>{{ $sell->user->username }}</td>
                                     @if(Auth::check() && auth()->user()->isAdmin())
                                         <td class="actions-hover actions-fade">

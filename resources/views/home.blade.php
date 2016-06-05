@@ -130,7 +130,7 @@
                 <div class="panel-body" style="height: 200px">
                     <ul>
                         @foreach($losts as $lost)
-                            <li><a href="{{ url('lost/detail/'.$lost->id) }}">{{ $lost->title }}</a></li>
+                            <li><a href="{{ url('lost/detail/'.$lost->id) }}">{{ $lost->info }}</a></li>
                         @endforeach
                     </ul>
                 </div>

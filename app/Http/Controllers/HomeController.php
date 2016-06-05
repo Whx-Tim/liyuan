@@ -460,7 +460,7 @@ class HomeController extends Controller
     {
         $this->validate($request,[
             'name'          => 'required',
-            'course_number' => 'required|min:1000000000|max:10000000000',
+            'course_number' => 'required|min:1000000000|max:10000000000|integer',
             'time'          => 'required',
             'teacher'       => 'required',
             'phone'         => 'required|regex:/^1[34578]\d{9}$/',
@@ -690,5 +690,15 @@ class HomeController extends Controller
         ]);
         
         return Replie::create($request->except('_token')) ? redirect()->back()->with(['status' => 'success','message' => '发布成功！']) : redirect()->back()->with(['status' => 'error','message' => '发布失败！']);
+    }
+
+    public function acceptComment(CourseComment $courseComment)
+    {
+        $courseComment->course->condition = true;
+        $courseComment->course->save();
+        $courseComment->accepted = true;
+        $courseComment->save();
+
+        return redirect()->back();
     }
 }

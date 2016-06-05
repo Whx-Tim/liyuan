@@ -61,6 +61,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('','GuestController@showCourseHome');
         Route::get('detail/{course}','GuestController@showCourseDetail');
         Route::get('edit/{course}','HomeController@showExchangeEdit');
+        Route::get('comment/{courseComment}','HomeController@acceptComment');
         Route::post('','HomeController@addExchange');
         Route::post('comment','HomeController@commentExchange');
         Route::post('search','GuestController@searchCourse');

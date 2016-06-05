@@ -24,7 +24,7 @@
                                     @endif
                                 </h1>
                             <ul class="list-inline">
-                                <li>浏览次数:</li>
+                                <li>浏览次数:{{ $course->count }}</li>
                             </ul></th>
                             </thead>
                             <tbody>

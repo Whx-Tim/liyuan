@@ -13,10 +13,14 @@
             <tr><td><div class="col-md-3">回帖人：</div><div class="col-md-6">{{ $comment->user->username }}</div></td></tr>
             <tr><td><div class="col-md-3">回帖时间：</div><div class="col-md-6">{{ $comment->created_at }}</div></td></tr>
             <tr><td><div class="col-md-3">状态：</div><div class="col-md-6">
-                        @if($comment->condition)
+                        @if($comment->accepted)
                             <button type="button" class="btn btn-radius btn-danger"><i class="fa fa-exclamation"></i>已接受</button>
                         @else
-                            <button type="button" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</button>
+                            @if($comment->course->condition)
+                                <button type="button" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</button>
+                            @else
+                                <a href="{{ url('exchange/comment/'.$comment->id) }}" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</a>
+                            @endif
                         @endif
                     </div></td></tr>
             <tr><td class="actions-hover actions-fade">

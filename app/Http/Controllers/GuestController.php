@@ -80,6 +80,8 @@ class GuestController extends Controller
      * @return mixed
      */
     public function showCourseDetail(Course $course){
+        $course->count++;
+        $course->save();
         return view('wanshiwu.exchange.detail',compact('course'));
     }
 

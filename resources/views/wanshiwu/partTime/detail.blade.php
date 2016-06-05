@@ -19,7 +19,7 @@
                             <thead>
                             <th>
                                 <h1>{{ $partTime->title }}
-                                    <button type="button" class="btn btn-danger btn-radius btn-lg pull-right" data-toggle="modal" data-target=".partTime-comment-modal">回帖</button>
+                                    {{--<button type="button" class="btn btn-danger btn-radius btn-lg pull-right" data-toggle="modal" data-target=".partTime-comment-modal">回帖</button>--}}
                                 </h1>
                                 <h4>浏览次数：{{ $partTime->count }}</h4>
                             </th>

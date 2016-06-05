@@ -42,13 +42,13 @@
                             <li class="list-group-item"><span>物品介绍：</span>{{ $sell->content }}</li>
                             <li class="list-group-item"><span>图片：</span><img src="{{ $sell->img }}" alt="物品图片" class="img-thumbnail"></li>
                             <li class="list-group-item">
-                                @if(Auth::check() && (Auth::user()->id == $sell->user->id || auth()->user()->isAdmin))
+                                @if(Auth::check() && ((Auth::user()->id == $sell->user_id) || Auth::user()->isAdmin()))
                                 <a href="{{ url('sell/edit/'.$sell->id) }}" class="btn btn-primary btn-radius ">编辑</a>
                                 <a data-id="{{ $sell->id }}" href="javascript:;" class="btn btn-danger btn-radius" onclick="Delete($(this))">删除</a>
                                 @endif
                             </li>
                         </ul>
-                        @include('wanshiwu.sellComment_modal')
+                        {{--@include('wanshiwu.sellComment_modal')--}}
                     <hr>
                     <a href="{{ url('sell') }}" class="btn btn-danger btn-radius btn-block">返回</a>
                 </div>
@@ -62,6 +62,7 @@
 @section('js')
     <script type="text/javascript">
         $("#sell-condition").click(function () {
+            @if(Auth::user()->id == $sell->user_id)
             var id = $("#sell-condition").attr('data-id')
             swal({
                 title: "确定更改状态？",
@@ -88,6 +89,9 @@
                     }
                 });
             });
+            @else
+            swal('错误！','您不是发帖者！','warning');
+            @endif
         })
     </script>
 @endsection

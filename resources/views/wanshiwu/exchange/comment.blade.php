@@ -16,10 +16,10 @@
                         @if($comment->accepted)
                             <button type="button" class="btn btn-radius btn-danger"><i class="fa fa-exclamation"></i>已接受</button>
                         @else
-                            @if($comment->course->condition)
-                                <button type="button" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</button>
-                            @else
+                            @if(Auth::check() && !$comment->course->condition && $comment->course->user->id == Auth::user()->id)
                                 <a href="{{ url('exchange/comment/'.$comment->id) }}" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</a>
+                            @else
+                                <button type="button" class="btn btn-radius btn-success"><i class="fa fa-check"></i>未接受</button>
                             @endif
                         @endif
                     </div></td></tr>

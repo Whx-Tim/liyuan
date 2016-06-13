@@ -43,7 +43,6 @@
 <script type="text/javascript" src="{{ url('js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/jquery.pagination.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/jquery.knob.min.js') }}"></script>
-<script src="//cdn.bootcss.com/select2/4.0.2-rc.1/js/select2.min.js"></script>
 <script src="//cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script type="text/javascript" src="{{ url('js/main.js') }}"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
